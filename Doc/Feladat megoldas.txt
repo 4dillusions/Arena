@@ -1,0 +1,89 @@
+v 0.1
+
+Bevezető
+--------
+A feladat egy klasszikus szöveges körökre osztott 1v1 harcjáték implementálása konzolos (terminal) kimenetes megjelenítéssel.
+
+Tech
+----
+A fejlesztési nyelv gyakorlatilag az általános célú, OOP-t is támogató programnyelvek bármelyike lehet.
+Az általam leginkább ismert C++ és C# közül már előzetesen a C#-ot választottam, így ezzel és a hozzá tartozó .NET keretrendszerrel implementálom a programot win11 desktop rendszerre.
+Fejlesztői eszköznek a VS 2022-őt választom + ReSharper OpenSource, a .NET verzió pedig "sima" .NET Framework 4.8, mert nem volt kikötve se platform, se egyéb technológiai kívánság.
+Teszteléshez az MS test rendszerét fogom igénybe venni.
+
+Előzetes felmérés
+-----------------
+Játékfejlesztés területén jelenleg két uralkodó módszer használatos(illetve ezek elegye): az OOP és a DOD.
+Az OOP a hagyományos üzleti fejlesztésknél is évtizedek óta használt személetmód/implementációs eszköz, mindenki ismeri, a .NET mindenféle előre implementált patternnel és több ezenyi osztállyal támogatja.
+
+A DOD (Data Oriented Design) egy újfajta az adatokat szem előtt tartó fejlesztési módszer. Ennek lényege, hogy az adatokat és a viselkedést szétválasztva a adatokat partícionálják
+és a viselkedéseket különválasztva egy n*m kombinációval ún. entitást hoznak létre, ami gyakorlatilag tesztőlegesen kombinálható adat és viselkedés halmazt tartalmaz.
+A módszer az entitások rugalmas felépítésén kívül az egynemű adatok memóriában foglalt folytonossága révén nagy sebességű iterációt biztosít nagyszámú intetitás esetén, ami egy
+16 msec-es valós idejű alkalmazásnál kulcsfontosságú módszer.
+
+Az alábbiakban a már bevált OOP-t fogom használni, ami szerintem a feladat megvalósításához, esetleges továbfejlesztéséhez teljesen elegendő. Esetleg ezt lehet kicsit finomítani a feladathoz illően.
+
+Tervezés
+--------
+Egy vastag kliens alkalmazást képzelek el n rétegű architektúrával, ahol a rétegek a klasszikus MVC mintában rajzolódnak ki.
+
+Model: 
+	csak adattagokból álló DTO/POD. Az MS ajánlással szemben itt nincs program logika, sőt semmilyen művelet nincsen, csak nyers adat.
+	egyik rétegről se tud semmit
+	technológia független
+
+View: 
+	csak egy Model-t tud írni/olvasni szükség esetén, eseményeket süt el, amikre fel lehet iratkozni (bevitel például). A többi rétegről semmit se tud.
+	ez most jelenleg a terminal-t reprezentálja szöveges bevitel és kiírás.
+	technológia függő, jelenleg a .NET console app az
+	
+Controller:
+	kommunikál közvetett módon a View-el semények segítségével
+	csak a szervízt látja, annak közvetíti az eseményeket, illetve vezérel vele
+	itt most nem a view-en történő iterakciókra reagál, mint egy hagyományos esemény alapú alkalmazásnál, hanem ő vezérel közvetett módon a System-el
+	esetenként technológia függő lehet (pl MVVM-nél ViewModel személyében, de itt most tech független)
+	
+Service: 
+	program logikát tartalmaz, jelen esetben a harcrendszert realizálja
+	a View-et a Model-en keresztül tudja elérni
+	ez is technológia független és a tesztelés egyik központi eleme
+	
+Egyéb játékobjektumok
+---------------------
+Hero (Model):
+	az arénában résztvevő hős
+	van azonosítója, életereje és szerepe
+	az életerő alapján meghatározható, hogy él e származtatott attribútummal
+	a felület számára lekérdezhető az állapota
+	
+Terminal (View):
+	a felhasználói felületet reprezentálja, ahol be lehet vinni szöveget, amiről eseményt küld és kiír információkat, semmi mást nem tud
+	
+LimeArena (Controller):
+	vezérli a játékot
+	tartalmazza a hősöket nyílvántartó heterogén kollekciót
+	bekéri a hősök számát, toborozza őket (factory)
+	kiválaszttat 1v1 harcra hősöket
+	lejátsszatja a kört
+	leállítja a játékot
+
+LimeAttackSystem (Service):
+	ellenőrzi van e még hős, ha csak egy van és él vége a játéknak, ő nyert
+	harcra választ 2 hőst
+	kört futtat, ahol két hős közül egyik elesik, vagy más történik
+	harcost pihentet, regenerálódik
+	harcost harcoltat és csökken az életereje
+	
+Kellenek még: Random generátorok, esetleg DI, Mock, még pár kigészítő osztály, amit előre nem tudok még
+
+Fejlesztés
+----------
+TDD-vel probálom a fejlesztést kialakítani. 
+	ezzel az architekúrát rákényszerítem egy tesztelhető formára, tényleges futtatás nélkül
+	teszt körülmények között tudom ellenőrizni a működést
+	bármit változtatok nem rontom el vele azt, ami már működik (feltéve, hogy a működési elv se változik közben)
+	a végleges implementációhoz kapok egy keret implementációt, ami egy prototípusnak is megfeleltethető
+	
+"Vágjunk bele!" - szólt a kardos
+--------------------------------
+Egyelőre ennyit tervezek előre, a többit majd hozzák az éles TDD ciklusok

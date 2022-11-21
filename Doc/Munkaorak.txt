@@ -1,0 +1,4 @@
+2022.11.21 
+	30m specifikáció tanulmányozása, kérdés feltevése
+	10m privát github repo kialakítása
+	2h tervezgetés egyelőre "papíron"
