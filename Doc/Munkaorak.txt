@@ -2,3 +2,8 @@
 	30m specifikáció tanulmányozása, kérdés feltevése
 	10m privát github repo kialakítása
 	2h tervezgetés egyelőre "papíron"
+	
+2022.11.22
+	5h
+		project struktúra kialakítása
+		DI, Mock és Mapping 3rd partyk integrálása és tesztek írása

@@ -87,3 +87,10 @@ TDD-vel probálom a fejlesztést kialakítani.
 "Vágjunk bele!" - szólt a kardos
 --------------------------------
 Egyelőre ennyit tervezek előre, a többit majd hozzák az éles TDD ciklusok
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+v 0.2
+project struktúra kialakítása
+DI, Mock és Mapping 3rd partyk integrálása és tesztek írása
+
+Az integrálásnál ügyeltem arra, hogy a függőségek ne gyűrűzzenek tovább és kívülről transzparensen elérhetőek legyenek interfészeken keresztül
