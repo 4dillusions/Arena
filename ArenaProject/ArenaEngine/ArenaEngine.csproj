@@ -57,7 +57,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Controller\LimeArena.cs" />
+    <Compile Include="Core\GameConfigDTO.cs" />
+    <Compile Include="Core\HeroTypes.cs" />
+    <Compile Include="Core\RecruitmentManager.cs" />
+    <Compile Include="Model\HeroDTO.cs" />
+    <Compile Include="Service\IAttackSystem.cs" />
+    <Compile Include="Service\LimeAttackSystem.cs" />
     <Compile Include="ThirdParty\AutoMapper\AutoMapperManager.cs" />
     <Compile Include="ThirdParty\AutoMapper\AutoMapperProfile.cs" />
     <Compile Include="ThirdParty\AutoMapper\IAutoMapperManager.cs" />
