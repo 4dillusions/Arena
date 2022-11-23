@@ -29,10 +29,10 @@ namespace ArenaTest.Engine
         public void RandomRecruitmentFromLimeArena()
         {
             var gameConfig = new GameConfigDTO() { MaximumArenaHeroCount = 4 };
-            IAttackSystem attackSystem = new LimeAttackSystem(gameConfig);
+            IBattleSystem battleSystem = new LimeBattleSystem(gameConfig);
 
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => attackSystem.CreateRandomHeroTypeList(5));
-            Assert.IsTrue(attackSystem.CreateRandomHeroTypeList(4).Count == 4);
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => battleSystem.CreateRandomHeroTypeList(5));
+            Assert.IsTrue(battleSystem.CreateRandomHeroTypeList(4).Count == 4);
         }
     }
 }

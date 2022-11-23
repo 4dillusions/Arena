@@ -11,7 +11,8 @@ namespace ArenaEngine.Model
     public class HeroDTO
     {
         public uint Id { get; set; }
-        public byte Power { get; set; }
-        HeroTypes HeroType { get; set; }
+        public int Power { get; set; }
+        public HeroTypes HeroType { get; set; }
+        public bool IsAlive { get; set; } = true;
     }
 }

@@ -62,8 +62,8 @@
     <Compile Include="Core\HeroTypes.cs" />
     <Compile Include="Core\RecruitmentManager.cs" />
     <Compile Include="Model\HeroDTO.cs" />
-    <Compile Include="Service\IAttackSystem.cs" />
-    <Compile Include="Service\LimeAttackSystem.cs" />
+    <Compile Include="Service\IBattleSystem.cs" />
+    <Compile Include="Service\LimeBattleSystem.cs" />
     <Compile Include="ThirdParty\AutoMapper\AutoMapperManager.cs" />
     <Compile Include="ThirdParty\AutoMapper\AutoMapperProfile.cs" />
     <Compile Include="ThirdParty\AutoMapper\IAutoMapperManager.cs" />

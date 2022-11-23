@@ -15,13 +15,13 @@ namespace ArenaEngine.Controller
     /// </summary>
     public class LimeArena
     {
-        private readonly IAttackSystem attackSystem;
+        private readonly IBattleSystem _battleSystem;
 
         private Queue<HeroDTO> heroList = new Queue<HeroDTO>();
 
-        public LimeArena(IAttackSystem attackSystem)
+        public LimeArena(IBattleSystem battleSystem)
         {
-            this.attackSystem = attackSystem;
+            this._battleSystem = battleSystem;
         }
     }
 }

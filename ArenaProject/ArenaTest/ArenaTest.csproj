@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\RecruitmentTests.cs" />
+    <Compile Include="Engine\BattleTests.cs" />
     <Compile Include="ThirdParty\AutoMapper\AutoMapperTests.cs" />
     <Compile Include="ThirdParty\AutoMapper\MapDTO1.cs" />
     <Compile Include="ThirdParty\AutoMapper\MapDTO2.cs" />
