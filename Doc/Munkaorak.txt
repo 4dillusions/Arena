@@ -13,3 +13,10 @@
 		toborzás logika és a hozzá tartozó osztályok, tesztek
 		harcos generálás és harcrendszer tesztelése és implementálása
 		kör logika implementáció/tesztek, GameLoop controlling
+		
+2022.11.24
+	2h
+		console app implementálása
+		
+Sum
+	15h 40m

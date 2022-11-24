@@ -105,3 +105,8 @@ kör logika implementáció/tesztek, GameLoop controlling
 
 Lényegében elkészült az alkalmazás, amit még jelenleg csak tesztek által látok működni
 A tényleges múködés életre keltéséhez a View réteget is implementálni kell
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+v 1.0
+console app implementálása, befejezés, manuális tesztelés, beadás

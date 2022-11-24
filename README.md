@@ -1,4 +1,8 @@
 # Arena
+<p align="center">
+  <img src="Doc/battle.jpg">
+</p>
+
 Egyszerű szöveges körökre osztott 1v1 harcjáték szimulátor (.NET, C#, console app)
 
 ### Specifikáció
