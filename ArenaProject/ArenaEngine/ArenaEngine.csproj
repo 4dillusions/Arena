@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\LimeArena.cs" />
+    <Compile Include="Core\ConvertHelper.cs" />
     <Compile Include="Core\GameConfigDTO.cs" />
     <Compile Include="Core\HeroTypes.cs" />
     <Compile Include="Core\RecruitmentManager.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="ThirdParty\AutoMapper\AutoMapperManager.cs" />
     <Compile Include="ThirdParty\AutoMapper\AutoMapperProfile.cs" />
     <Compile Include="ThirdParty\AutoMapper\IAutoMapperManager.cs" />
+    <Compile Include="ThirdParty\AutoMapper\IAutoMapperMappings.cs" />
     <Compile Include="ThirdParty\AutoMapper\MappingList.cs" />
     <Compile Include="ThirdParty\DependecyInjection\DILifetimeScopes.cs" />
     <Compile Include="ThirdParty\DependecyInjection\DIManager.cs" />
