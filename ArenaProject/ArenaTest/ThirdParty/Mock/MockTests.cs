@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-using ArenaTest.ThirdParty.DependecyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
 using Mocker = Moq.Mock;

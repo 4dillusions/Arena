@@ -7,3 +7,9 @@
 	5h
 		project struktúra kialakítása
 		DI, Mock és Mapping 3rd partyk integrálása és tesztek írása
+
+2022.11.23
+	6h
+		toborzás logika és a hozzá tartozó osztályok, tesztek
+		harcos generálás és harcrendszer tesztelése és implementálása
+		kör logika implementáció/tesztek, GameLoop controlling

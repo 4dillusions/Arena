@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using ArenaEngine.Core;
+﻿using ArenaEngine.Core;
 using ArenaEngine.Model;
+using System;
+using System.Collections.Generic;
 
 namespace ArenaEngine.Service
 {
@@ -31,9 +31,10 @@ namespace ArenaEngine.Service
 
         public HeroDTO CreateHero(HeroTypes heroType)
         {
-            var result = new HeroDTO()
+            var result = new HeroDTO
             {
-                HeroType = heroType
+                HeroType = heroType,
+                IsAlive = true
             };
 
             switch (heroType)
@@ -48,30 +49,66 @@ namespace ArenaEngine.Service
             return result;
         }
 
-        public void ValidateHero(HeroDTO hero)
+        public List<HeroDTO> CreateRandomHeroList(uint listSize)
         {
-            short maxPower;
-            
-            switch (hero.HeroType)
+            var result = new List<HeroDTO>();
+            var heroTypeList = CreateRandomHeroTypeList(listSize);
+
+            for (uint i = 0; i < heroTypeList.Count; i++)
             {
-                case HeroTypes.KnightRider: maxPower = gameConfig.KnightRiderMaxPower; break;
-                case HeroTypes.Swordsman: maxPower = gameConfig.SwordsmanMaxPower; break;
-                case HeroTypes.Bowman: maxPower = gameConfig.BowmanMaxPower; break;
-                
-                default: throw new ArgumentOutOfRangeException();
+                var hero = CreateHero(heroTypeList[(int)i]);
+                hero.Id = i + 1;
+                result.Add(hero);
             }
 
-            //-életerő nem mehet a max fölé
-            if (hero.Power > maxPower)
-                hero.Power = maxPower;
+            return result;
+        }
 
-            //-ha életerő kisebb, mint a max negyede, akkor nem él
-            if (hero.Power < maxPower / 4)
-                hero.IsAlive = false;
+        public List<HeroDTO> SelectHeroesForBattle(ref List<HeroDTO> heroList)
+        {
+            var result = new List<HeroDTO>();
+            var random = new Random();
+
+            if (heroList.Count < 2)
+                return result;
+
+            for (int i = 0; i < 2; i++)
+            {
+                var heroRandIndex = random.Next(heroList.Count - 1);
+                result.Add(heroList[heroRandIndex]);
+                heroList.RemoveAt(heroRandIndex);
+            }
+            
+            return result;
+        }
+
+        public void GoRestHeroesAfterBattle(List<HeroDTO> battleHeroes, ref List<HeroDTO> heroList)
+        {
+            foreach (var hero in battleHeroes)
+            {
+                ValidateHero(hero);
+
+                if (hero.IsAlive)
+                {
+                    hero.Power += gameConfig.RestPowerIncrement; //pihenő idő, életerő növekszik
+                    ValidateHero(hero); //azért túlzásba se kell vinni a töltődést
+                    
+                    heroList.Add(hero);
+                }
+            }
         }
 
         public void PlayBattle(HeroDTO attacker, HeroDTO defender)
         {
+            void DecrementPowerAfterBattle()
+            {
+                attacker.Power /= 2;
+                defender.Power /= 2;
+
+                ValidateHero(attacker);
+                ValidateHero(defender);
+            }
+
             //ha a lovas védekezik, akkor...
             if (defender.HeroType == HeroTypes.KnightRider)
             {
@@ -84,6 +121,8 @@ namespace ArenaEngine.Service
                     default: throw new ArgumentOutOfRangeException();
                 }
 
+                DecrementPowerAfterBattle();
+
                 return;
             }
 
@@ -92,11 +131,37 @@ namespace ArenaEngine.Service
             if (attacker.HeroType == HeroTypes.KnightRider && defender.HeroType == HeroTypes.Swordsman)
             {
                 attacker.Power = 0;
+                DecrementPowerAfterBattle();
+
                 return;
             }
 
             if (defender.HeroType == HeroTypes.Swordsman || defender.HeroType == HeroTypes.Bowman)
                 defender.Power = 0;
+
+            DecrementPowerAfterBattle();
+        }
+
+        public void ValidateHero(HeroDTO hero)
+        {
+            short maxPower;
+
+            switch (hero.HeroType)
+            {
+                case HeroTypes.KnightRider: maxPower = gameConfig.KnightRiderMaxPower; break;
+                case HeroTypes.Swordsman: maxPower = gameConfig.SwordsmanMaxPower; break;
+                case HeroTypes.Bowman: maxPower = gameConfig.BowmanMaxPower; break;
+
+                default: throw new ArgumentOutOfRangeException();
+            }
+
+            //-életerő nem mehet a max fölé
+            if (hero.Power > maxPower)
+                hero.Power = maxPower;
+
+            //-ha életerő kisebb, mint a max negyede, akkor nem él
+            if (hero.Power < maxPower / 4)
+                hero.IsAlive = false;
         }
     }
 }

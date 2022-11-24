@@ -88,9 +88,20 @@ TDD-vel probálom a fejlesztést kialakítani.
 --------------------------------
 Egyelőre ennyit tervezek előre, a többit majd hozzák az éles TDD ciklusok
 
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 v 0.2
 project struktúra kialakítása
 DI, Mock és Mapping 3rd partyk integrálása és tesztek írása
 
 Az integrálásnál ügyeltem arra, hogy a függőségek ne gyűrűzzenek tovább és kívülről transzparensen elérhetőek legyenek interfészeken keresztül
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+v 0.3
+toborzás logika és a hozzá tartozó osztályok, tesztek
+harcos generálás és harcrendszer tesztelése és implementálása
+kör logika implementáció/tesztek, GameLoop controlling
+
+Lényegében elkészült az alkalmazás, amit még jelenleg csak tesztek által látok működni
+A tényleges múködés életre keltéséhez a View réteget is implementálni kell

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ArenaEngine.Core;
 using ArenaEngine.Model;
 using ArenaEngine.Service;
@@ -9,6 +10,26 @@ namespace ArenaTest.Engine
     [TestClass]
     public class BattleTests
     {
+        /// <summary>
+        /// Kiválaszt az arénából 2 harcost (ha van) a küzdelemre
+        /// </summary>
+        [TestMethod]
+        public void SelectHeroesForBattle()
+        {
+            IBattleSystem battleSystem = new LimeBattleSystem(new GameConfigDTO());
+            var heroList = new List<HeroDTO>();
+
+            Assert.IsTrue(battleSystem.SelectHeroesForBattle(ref heroList).Count == 0);
+
+            heroList = battleSystem.CreateRandomHeroList(2);
+            Assert.IsTrue(battleSystem.SelectHeroesForBattle(ref heroList).Count == 2);
+            Assert.IsTrue(heroList.Count == 0);
+
+            heroList = battleSystem.CreateRandomHeroList(3);
+            Assert.IsTrue(battleSystem.SelectHeroesForBattle(ref heroList).Count == 2);
+            Assert.IsTrue(heroList.Count == 1);
+        }
+
         /// <summary>
         /// a szabályok szerint:
         /// -életerő nem mehet a max fölé
@@ -68,7 +89,7 @@ namespace ArenaTest.Engine
         }
 
         /// <summary>
-        /// Hősök között 1v1 küzdelem
+        /// Hősök között 1v1 küzdelem (mindenki mindenkivel)
         /// </summary>
         [TestMethod]
         public void PlayBattle()
@@ -139,6 +160,53 @@ namespace ArenaTest.Engine
             //íjászt: íjász meghal
             RecreateHeroesAndPlayBattle(battleSystem, ref knightRiderAttacker, ref bowmanDefender);
             Assert.IsTrue(knightRiderAttacker.Power > 0 && bowmanDefender.Power == 0);
+        }
+
+        /// <summary>
+        /// Harc után elfáradnak az emberek
+        /// </summary>
+        [TestMethod]
+        public void AfterPlayBattle()
+        {
+            var gameConfig = new GameConfigDTO();
+            IBattleSystem battleSystem = new LimeBattleSystem(gameConfig);
+
+            var knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
+            var swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
+
+            Assert.IsTrue(knightRider.Power > gameConfig.KnightRiderMaxPower / 2);
+            Assert.IsTrue(swordsman.Power > gameConfig.SwordsmanMaxPower / 2);
+
+            battleSystem.PlayBattle(swordsman, knightRider);
+
+            Assert.IsTrue(knightRider.Power == gameConfig.KnightRiderMaxPower / 2);
+            Assert.IsTrue(swordsman.Power == gameConfig.SwordsmanMaxPower / 2);
+        }
+
+        /// <summary>
+        /// Harc után visszamennek a helyükre pihenni (ha még élnek)
+        /// </summary>
+        [TestMethod]
+        public void GoRestAfterPlayBattle()
+        {
+            var gameConfig = new GameConfigDTO();
+            IBattleSystem battleSystem = new LimeBattleSystem(gameConfig);
+
+            var heroList = new List<HeroDTO>();
+            var knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
+            var swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
+
+            battleSystem.GoRestHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, ref heroList);
+            Assert.IsTrue(heroList.Count == 2);
+            Assert.IsTrue(heroList[0].Power == gameConfig.KnightRiderMaxPower);
+            Assert.IsTrue(heroList[1].Power == gameConfig.SwordsmanMaxPower);
+
+            heroList.Clear();
+            knightRider.Power = 10;
+            battleSystem.GoRestHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, ref heroList);
+            Assert.IsTrue(heroList.Count == 1);
+            Assert.IsTrue(knightRider.Power == 10);
+            Assert.IsTrue(heroList[0].Power == gameConfig.SwordsmanMaxPower);
         }
     }
 }
