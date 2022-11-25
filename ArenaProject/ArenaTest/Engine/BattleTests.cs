@@ -179,7 +179,7 @@ namespace ArenaTest.Engine
             Assert.IsTrue(knightRider.Power == gameConfig.KnightRiderMaxPower / 2);
             Assert.IsTrue(swordsman.Power == gameConfig.SwordsmanMaxPower / 2);
         }
->
+
         [TestMethod]
         public void GoRestAfterPlayBattle()
         {

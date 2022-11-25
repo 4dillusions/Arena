@@ -5,7 +5,7 @@ namespace ArenaTest.ThirdParty.DependecyInjection
 {
     /// <summary>
     /// Don't trust 3rd party packages!
-    /// Test it for good working and write documentation its implementation
+    /// Test it for good working and write implementation for its documentation
     /// </summary>
     [TestClass]
     public class DependencyInjectionTest
