@@ -3,44 +3,42 @@
   <img src="Doc/battle.jpg">
 </p>
 
-Egyszerű szöveges körökre osztott 1v1 harcjáték szimulátor (.NET, C#, console app)
+Arena is a simple Turn-based 1v1 battle simulator.
 
-### Specifikáció
-Az arénában N db hősök küzdenek, akik lehetnek íjászok, lovasok és kardosok. Minden hős
-rendelkezik egy azonosítóval és életerővel, valamint a lenti szabály szerint tudnak támadni és
-védekezni.
+### Specification
+There are many heroes in the arena like bowman, knight rider and swordsman. Every hero have an id, power and can attack and defense according to rules:
 
-Íjász támad
+Bowman (attack)
 <ul>
-    <li>lovast: 40% eséllyel a lovas meghal, 60%-ban kivédi</li>
-    <li>kardost: kardos meghal</li>
-    <li>íjászt: védekező meghal</li>
+    <li>knight rider (defense): dies 40%, lives 60%</li>
+    <li>swordsman (defense): dies</li>
+    <li>bowman (defense): dies</li>
 </ul>
 
-Kardos támad
+Swordsman (attack) VS
 <ul>
-    <li>lovast: nem történik semmi</li>
-    <li>kardost: védekező meghal</li>
-    <li>íjászt: íjász meghal</li>
+    <li>knight rider (defense): nothing happens </li>
+    <li>swordsman (defense): dies</li>
+    <li>bowman (defense): dies</li>
 </ul>
 
-Lovas támad
+Knight rider (attack)
 <ul>
-    <li>lovast: védekező meghal</li>
-    <li>kardost: lovas meghal</li>
-    <li>íjászt: íjász meghal</li>
+    <li>knight rider (defense): dies</li>
+    <li>swordsman (defense): knight rider dies</li>
+    <li>bowman (defense): dies</li>
 </ul>
 
-A csata körökre van lebontva, minden körbe véletlenszerűen kiválasztásra kerül egy támadó és egy
-védekező. A kimaradt hősök pihennek és növekszik az életerejük 10-el, viszont nem mehet a
-maximum fölé.</br>
-A harcban résztvevő hősök életereje a felére csökken, ha ez kisebb mint a kezdeti életerő negyede
-akkor meghalnak. Kezdeti életerők íjász: 100 lovas: 150 kardos: 120.</br>
+The game is divided into turns. An attacker and a defender are selected randomly for every turns. The other heroes rest and their power increase by 10. Their power can't increase above maximum.</br>
 
-A csata elindítása előtt lekell generálni N darab véletlenszerű hőst, amit paraméterként fog
-megkapni. Csata addig tart még maximum 1 hős marad elétben.</br>
+The power of the heroes decrease half. The power is less than quarter of the initial/maximum power then hero die.</br>
 
-Minden kör végén logolni kell ki támadott meg kit és hogyan változott az életerejük.</br>
+Initial and maximum power:
+<ul>
+    <li>knight rider: 150</li>
+    <li>swordsman: 120</li>
+    <li>bowman: 100</li>
+</ul>
 
-Készíts egy olyan consol applikációt ami a fenti szabályt figyelembe véve hősöket csatáztat
-egymással. 
+Before first turns generate heroes randomly. The random number is a parameter for game. 
+The game lasts until a maximum of one hero remains. After turns write log with heroes properties. Create this game as a console application.
