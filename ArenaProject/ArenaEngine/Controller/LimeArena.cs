@@ -32,7 +32,7 @@ namespace ArenaEngine.Controller
         {
             if (ArenaHeroesCount < 2)
             {
-                WriteLog("A megadott hősök száma minimum 2 kell legyen!!");
+                WriteLog("The number of specified heroes must be at least 2!");
                 return false;
             }
 
@@ -42,7 +42,7 @@ namespace ArenaEngine.Controller
             }
             catch (ArgumentOutOfRangeException)
             {
-                WriteLog("A megadott hősök száma nagyobb a maximálisan megadhatónál!");
+                WriteLog("The number of recommended heroes is greater than the maximum allowed!");
                 return false;
             }
 
@@ -60,35 +60,35 @@ namespace ArenaEngine.Controller
             do //turns
             {
                 WriteLog("\n" + roundCounter++ + ". kör");
-                WriteLog("Az arénában küzdő hősök száma: " + heroList.Count);
+                WriteLog("Number of heroes in arena: " + heroList.Count);
 
                 var battleHeroes = battleSystem.SelectHeroesForBattle(ref heroList);
-                battleHeroes[0].Description = "támadó";
-                battleHeroes[1].Description = "védekező";
-                WriteHeroesStatsLog("Küzdelemre kiválasztott hősök:", battleHeroes);
+                battleHeroes[0].Description = "attacker";
+                battleHeroes[1].Description = "defender";
+                WriteHeroesStatsLog("Selected heroes for battle:", battleHeroes);
 
                 battleSystem.PlayBattle(battleHeroes[0], battleHeroes[1]);
-                WriteHeroesStatsLog("Küzdelem utáni állapot:", battleHeroes);
+                WriteHeroesStatsLog("Heroes state after the battle:", battleHeroes);
 
                 battleSystem.GoRestHeroesAfterBattle(battleHeroes, ref heroList);
 
             } while (heroList.Count > 1);
 
-            WriteLog("\nVége a játéknak!");
+            WriteLog("\nGame over!");
 
             if (heroList.Count == 1)
             {
                 var winner = heroList.First();
-                winner.Description = "babérkoszorú";
-                WriteLog("A győztes hős: " + HeroToString(winner), ConsoleColor.Cyan);
+                winner.Description = "Laurel wreath";
+                WriteLog("Winner: " + HeroToString(winner), ConsoleColor.Cyan);
             }
             else
-                WriteLog("Senki se élte túl a küzdelmeket!");
+                WriteLog("Nobody survived the game!");
         }
 
         string HeroToString(HeroDTO hero)
         {
-            return $"{hero.Id} .sz {hero.HeroType} hős, energia: {hero.Power} [{(hero.IsAlive ? "él" : "elesett")}] - {hero.Description}";
+            return $"{hero.Id} . {hero.HeroType} hero, power: {hero.Power} [{(hero.IsAlive ? "live" : "died")}] - {hero.Description}";
         }
 
         void WriteLog(string message, ConsoleColor color = ConsoleColor.Yellow)
