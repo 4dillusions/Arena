@@ -15,7 +15,7 @@ Bowman (attack)
     <li>bowman (defense): dies</li>
 </ul>
 
-Swordsman (attack) VS
+Swordsman (attack)
 <ul>
     <li>knight rider (defense): nothing happens </li>
     <li>swordsman (defense): dies</li>
