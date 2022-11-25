@@ -8,7 +8,7 @@ namespace ArenaEngine.ThirdParty.DependecyInjection
         readonly IDIManager di;
 
         /// <summary>
-        /// Jelenleg a Ninject-et támogatja, de ez lecserélhető később Microsoft, vagy egyéb megoldásra
+        /// Currently the manager supports Ninject. You can replace it something else.
         /// </summary>
         public DIManager()
         {

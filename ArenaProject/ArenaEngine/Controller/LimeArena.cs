@@ -7,12 +7,12 @@ using System.Linq;
 namespace ArenaEngine.Controller
 {
     /// <summary>
-    /// vezérli a játékot
-    /// tartalmazza a hősöket nyílvántartó heterogén kollekciót
-    /// bekéri a hősök számát, toborozza őket(factory)
-    /// kiválaszttat 1v1 harcra hősöket
-    /// lejátsszatja a kört
-    /// leállítja a játékot
+    /// control the game
+    /// contains heroes list
+    /// get heroes count
+    /// select heroes for 1v1 battle
+    /// play turns
+    /// stop the game
     /// </summary>
     public class LimeArena
     {
@@ -57,7 +57,7 @@ namespace ArenaEngine.Controller
             WriteLog( "Játék indul.");
 
             int roundCounter = 1;
-            do //körök
+            do //turns
             {
                 WriteLog("\n" + roundCounter++ + ". kör");
                 WriteLog("Az arénában küzdő hősök száma: " + heroList.Count);

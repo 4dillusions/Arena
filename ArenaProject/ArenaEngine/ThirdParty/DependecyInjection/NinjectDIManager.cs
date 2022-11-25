@@ -8,15 +8,14 @@ namespace ArenaEngine.ThirdParty.DependecyInjection
     public class NinjectDIManager : NinjectModule, IDIManager
     {
         /// <summary> 
-        /// azért static-ek, mert az initnél a Ninject újrapéldányosítja az osztályt és az utoljára
-        /// megadott állapotot vhogy muszáj megjegyezni
+        /// these are static because of Ninject initialization logic. Ninject create new instances every init and we have to store original one.
         /// </summary>
         static Action bindings;
         static StandardKernel kernel;
 
         #region Ninject
         /// <summary> 
-        /// Ezt a Ninject automatikusan hívja meg
+        /// Will call automatically by Ninject
         /// </summary>
         public override void Load()
         {

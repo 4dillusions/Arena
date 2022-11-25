@@ -7,31 +7,31 @@ namespace ArenaEngine.Service
     public interface IBattleSystem
     {
         /// <summary>
-        /// Hős típusokról ad vissza egy random listát
+        /// Generate random list of heroes
         /// </summary>
-        /// <param name="listSize"> random lista mérete </param>
-        /// <returns> hős típusok listája </returns>
+        /// <param name="listSize"> size of this list </param>
+        /// <returns> returns list contains heroes </returns>
         List<HeroTypes> CreateRandomHeroTypeList(uint listSize);
 
         HeroDTO CreateHero(HeroTypes heroType);
 
         List<HeroDTO> CreateRandomHeroList(uint listSize);
 
-        /// <summary> a bemenő listából kivesz harcosokat a visszatérő listába </summary>
+        /// <summary> take out heroes from heroList and add them in return list </summary>
         List<HeroDTO> SelectHeroesForBattle(ref List<HeroDTO> heroList);
 
-        /// <summary> Harc után visszamennek pihenni a helyükre </summary>
-        /// <param name="battleHeroes"> küzdő felek </param>
-        /// <param name="heroList"> összes hős listája </param>
+        /// <summary> Heroes go rest afther the battle </summary>
+        /// <param name="battleHeroes"> two heroes in the battle </param>
+        /// <param name="heroList"> list of all resting heroes </param>
         void GoRestHeroesAfterBattle(List<HeroDTO> battleHeroes, ref List<HeroDTO> heroList);
 
         /// <summary>
-        /// 1v1 ütközet két hős között, ahol az életerő és az élet változik attól függően, hogy ki a támadó s ki védekezik
-        /// küzdelem után is fogy az életerő a harc miatt
+        /// 1v1 battle, changing power and live state according to rules
+        /// decrease power because of battle
         /// </summary>
         void PlayBattle(HeroDTO attacker, HeroDTO defender);
 
-        /// <summary> validálja az életerőt és beállítja ez alapján, hogy él vagy nem a hős </summary>
+        /// <summary> maximize his power and change live state according to power </summary>
         void ValidateHero(HeroDTO hero);
     }
 }

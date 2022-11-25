@@ -3,10 +3,10 @@
 namespace ArenaEngine.Model
 {
     /// <summary>
-    /// Arénában résztvevő hős
-    /// van azonosítója életereje, szerepe
-    /// az életerő alapján meghatározandó, hogy él e
-    /// felület számára közvetít
+    /// The hero in arena
+    /// it is a data transfering object for game logic and others
+    /// has id, power, type
+    /// is alive or not depending on power
     /// </summary>
     public class HeroDTO
     {

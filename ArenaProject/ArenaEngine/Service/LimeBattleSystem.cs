@@ -6,11 +6,11 @@ using System.Collections.Generic;
 namespace ArenaEngine.Service
 {
     /// <summary>
-    /// ellenőrzi van e még hős, ha csak egy van és él vége a játéknak, ő nyert
-    /// harcra választ 2 hőst
-    /// kört futtat, ahol két hős közül egyik elesik, vagy más történik
-    /// harcost pihentet, regenerálódik
-    /// harcost harcoltat és csökken az életereje
+    /// check game state
+    /// select 2 heroes for battle
+    /// runs turns
+    /// increase/decrease hero's power
+    /// runs battle
     /// </summary>
     public class LimeBattleSystem : IBattleSystem
     {
@@ -90,8 +90,8 @@ namespace ArenaEngine.Service
 
                 if (hero.IsAlive)
                 {
-                    hero.Power += gameConfig.RestPowerIncrement; //pihenő idő, életerő növekszik
-                    ValidateHero(hero); //azért túlzásba se kell vinni a töltődést
+                    hero.Power += gameConfig.RestPowerIncrement; //rest time, increase power
+                    ValidateHero(hero); //maximize power
                     
                     heroList.Add(hero);
                 }
@@ -109,14 +109,14 @@ namespace ArenaEngine.Service
                 ValidateHero(defender);
             }
 
-            //ha a lovas védekezik, akkor...
+            //if knight rider is defending
             if (defender.HeroType == HeroTypes.KnightRider)
             {
                 switch (attacker.HeroType)
                 {
-                    case HeroTypes.KnightRider: defender.Power = 0; break; //lovas támad lovast -> védekező kinyúlik
-                    case HeroTypes.Swordsman: /* nem történik semmi */ break; //kardos támad lovast
-                    case HeroTypes.Bowman: defender.Power = new Random().Next(1, 10) <= 6 ? defender.Power : 0;  break; //ijjász támad lovast -> az esetek 40%-ban lovas meghal, 60%-ban kivédi
+                    case HeroTypes.KnightRider: defender.Power = 0; break; //knight rider attacks to other knight rider -> defender die
+                    case HeroTypes.Swordsman: /* nothing happens */ break; //swordsman attacks to knight rider
+                    case HeroTypes.Bowman: defender.Power = new Random().Next(1, 10) <= 6 ? defender.Power : 0;  break; //bowman attacks to knight rider -> knight rider dies 40%, lives 60%
 
                     default: throw new ArgumentOutOfRangeException();
                 }
@@ -126,8 +126,8 @@ namespace ArenaEngine.Service
                 return;
             }
 
-            //ha a kardos, vagy íjjász védekezik, akkor mindig a védekező kinyúlik
-            //kivétel, amikor lovas támad kardost, mert akkor viszont a lovas esik el
+            //if swordsman or bowman is defending they die
+            //except, knight rider is attacking to swordsman than knight rider dies
             if (attacker.HeroType == HeroTypes.KnightRider && defender.HeroType == HeroTypes.Swordsman)
             {
                 attacker.Power = 0;
@@ -155,11 +155,11 @@ namespace ArenaEngine.Service
                 default: throw new ArgumentOutOfRangeException();
             }
 
-            //-életerő nem mehet a max fölé
+            //maximize the power
             if (hero.Power > maxPower)
                 hero.Power = maxPower;
 
-            //-ha életerő kisebb, mint a max negyede, akkor nem él
+            //the power is less than quarter of the initial/maximum power then hero die
             if (hero.Power < maxPower / 4)
                 hero.IsAlive = false;
         }

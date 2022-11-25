@@ -2,13 +2,13 @@
 {
     public enum DILifetimeScopes
     {
-        /// <summary> mindig új példány keletkezik </summary>
+        /// <summary> always create new object </summary>
         Transient,
 
-        /// <summary> csak egy példány lehet </summary>
+        /// <summary> only one object </summary>
         Singleton,
 
-        /// <summary> szálanként egy példány keletkezik </summary>
+        /// <summary> one object per thread </summary>
         Thread,
     }
 }

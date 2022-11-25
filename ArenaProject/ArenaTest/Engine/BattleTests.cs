@@ -11,7 +11,7 @@ namespace ArenaTest.Engine
     public class BattleTests
     {
         /// <summary>
-        /// Kiválaszt az arénából 2 harcost (ha van) a küzdelemre
+        /// Select 2 heroes from arena (if it possible) for battle
         /// </summary>
         [TestMethod]
         public void SelectHeroesForBattle()
@@ -31,9 +31,9 @@ namespace ArenaTest.Engine
         }
 
         /// <summary>
-        /// a szabályok szerint:
-        /// -életerő nem mehet a max fölé
-        /// -életerő kisebb, mint a max negyede, akkor nem él
+        /// rules:
+        /// maximize the power
+        /// the power is less than quarter of the initial/maximum power then hero die
         /// </summary>
         [TestMethod]
         public void ValidateLimeHero()
@@ -43,7 +43,7 @@ namespace ArenaTest.Engine
             for (var i = 0; i < heroTypeCount; i++)
                 heroes[i] = new HeroDTO {HeroType = (HeroTypes) i, Power = (i + 1) * 10};
 
-            //születése után még él :)
+            //hero is alive afther born :)
             Assert.IsTrue(heroes[(int) HeroTypes.KnightRider].IsAlive);
             Assert.IsTrue(heroes[(int) HeroTypes.Swordsman].IsAlive);
             Assert.IsTrue(heroes[(int) HeroTypes.Bowman].IsAlive);
@@ -62,7 +62,7 @@ namespace ArenaTest.Engine
                 battleSystem.ValidateHero(heroes[i]);
             }
 
-            //-életerő nem mehet a max fölé
+            //maximize power
             Assert.IsTrue(heroes[(int) HeroTypes.KnightRider].Power == gameConfig.KnightRiderMaxPower);
             Assert.IsTrue(heroes[(int) HeroTypes.Swordsman].Power == gameConfig.SwordsmanMaxPower);
             Assert.IsTrue(heroes[(int) HeroTypes.Bowman].Power == gameConfig.BowmanMaxPower);
@@ -74,7 +74,7 @@ namespace ArenaTest.Engine
                 battleSystem.ValidateHero(heroes[i]);
             }
 
-            //-életerő kisebb, mint a max negyede, akkor nem él
+            //the power is less than quarter of the initial/maximum power then hero die
             Assert.IsFalse(heroes[(int) HeroTypes.KnightRider].IsAlive);
             Assert.IsFalse(heroes[(int) HeroTypes.Swordsman].IsAlive);
             Assert.IsFalse(heroes[(int) HeroTypes.Bowman].IsAlive);
@@ -89,7 +89,7 @@ namespace ArenaTest.Engine
         }
 
         /// <summary>
-        /// Hősök között 1v1 küzdelem (mindenki mindenkivel)
+        /// 1v1 battle rules
         /// </summary>
         [TestMethod]
         public void PlayBattle()
@@ -103,7 +103,7 @@ namespace ArenaTest.Engine
             var swordsmanDefender = battleSystem.CreateHero(HeroTypes.Swordsman);
             var bowmanDefender = battleSystem.CreateHero(HeroTypes.Bowman);
 
-            //generálása után van energiája
+            //hero has power after generate
             Assert.IsTrue(knightRiderAttacker.Power > 0);
             Assert.IsTrue(swordsmanAttacker.Power > 0);
             Assert.IsTrue(bowmanAttacker.Power > 0);
@@ -112,59 +112,56 @@ namespace ArenaTest.Engine
             Assert.IsTrue(bowmanDefender.Power > 0);
 
             //-------------------------------------------------------------------------------------------
-            //Íjász támad
+            //Bowman (attack)
 
-            ////lovast: 40% eséllyel a lovas meghal, 60%-ban kivédi
-            //van ötlet ezt hogyan lehetne tesztelni?
+            ////knight rider (defense): dies 40%, lives 60%
+            //Does anybody have an idea for testing it?
 
-            ////kardost: kardos meghal
+            ////swordsman (defense): dies
             RecreateHeroesAndPlayBattle(battleSystem, ref bowmanAttacker, ref swordsmanDefender);
             Assert.IsTrue(bowmanAttacker.Power > 0 && swordsmanDefender.Power == 0);
 
-            ////íjászt: védekező meghal
+            ////bowman (defense): dies
             RecreateHeroesAndPlayBattle(battleSystem, ref bowmanAttacker, ref bowmanDefender);
             Assert.IsTrue(bowmanAttacker.Power > 0 && bowmanDefender.Power == 0);
 
             //-------------------------------------------------------------------------------------------
-            //Kardos támad
+            //Swordsman (attack)
 
             ////
-            //lovast: nem történik semmi
+            //knight rider (defense): nothing happens
             RecreateHeroesAndPlayBattle(battleSystem, ref swordsmanAttacker, ref knightRiderDefender);
             Assert.IsTrue(swordsmanAttacker.Power > 0 && knightRiderDefender.Power > 0);
 
             ////
-            //kardost: védekező meghal
+            //swordsman (defense): dies
             RecreateHeroesAndPlayBattle(battleSystem, ref swordsmanAttacker, ref swordsmanDefender);
             Assert.IsTrue(swordsmanAttacker.Power > 0 && swordsmanDefender.Power == 0);
 
             ////
-            //íjászt: íjász meghal
+            //bowman (defense): dies
             RecreateHeroesAndPlayBattle(battleSystem, ref swordsmanAttacker, ref bowmanDefender);
             Assert.IsTrue(swordsmanAttacker.Power > 0 && bowmanDefender.Power == 0);
 
             //-------------------------------------------------------------------------------------------
-            //Lovas támad
+            //Knight rider (attack)
 
             ////
-            //lovast: védekező meghal
+            //knight rider (defense): dies
             RecreateHeroesAndPlayBattle(battleSystem, ref knightRiderAttacker, ref knightRiderDefender);
             Assert.IsTrue(knightRiderAttacker.Power > 0 && knightRiderDefender.Power == 0);
 
             ////
-            //kardost: lovas meghal
+            //swordsman (defense): knight rider dies
             RecreateHeroesAndPlayBattle(battleSystem, ref knightRiderAttacker, ref swordsmanDefender);
             Assert.IsTrue(knightRiderAttacker.Power == 0 && swordsmanDefender.Power > 0);
 
             ////
-            //íjászt: íjász meghal
+            //bowman (defense): dies
             RecreateHeroesAndPlayBattle(battleSystem, ref knightRiderAttacker, ref bowmanDefender);
             Assert.IsTrue(knightRiderAttacker.Power > 0 && bowmanDefender.Power == 0);
         }
 
-        /// <summary>
-        /// Harc után elfáradnak az emberek
-        /// </summary>
         [TestMethod]
         public void AfterPlayBattle()
         {
@@ -182,10 +179,7 @@ namespace ArenaTest.Engine
             Assert.IsTrue(knightRider.Power == gameConfig.KnightRiderMaxPower / 2);
             Assert.IsTrue(swordsman.Power == gameConfig.SwordsmanMaxPower / 2);
         }
-
-        /// <summary>
-        /// Harc után visszamennek a helyükre pihenni (ha még élnek)
-        /// </summary>
+>
         [TestMethod]
         public void GoRestAfterPlayBattle()
         {

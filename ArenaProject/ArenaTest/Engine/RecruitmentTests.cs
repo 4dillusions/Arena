@@ -7,7 +7,7 @@ using System.Linq;
 namespace ArenaTest.Engine
 {
     /// <summary>
-    /// Kapott enum alapján az enum itemek tartományában N db enum itemet sorsol ki
+    /// generate random enum items into a list
     /// </summary>
     [TestClass]
     public class RecruitmentTests
@@ -19,7 +19,7 @@ namespace ArenaTest.Engine
             
             Assert.IsNotNull(heroTypeList);
 
-            //minden elemből legalább egynek kell lennie a 10-es listában
+            //after generate list with 10 items, there must be at least one of each item
             Assert.IsTrue(heroTypeList.Any(t => t == HeroTypes.KnightRider));
             Assert.IsTrue(heroTypeList.Any(t => t == HeroTypes.Swordsman));
             Assert.IsTrue(heroTypeList.Any(t => t == HeroTypes.Bowman));

@@ -4,8 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ArenaTest.ThirdParty.DependecyInjection
 {
     /// <summary>
-    /// Nem szokás 3rd party-t tesztelni -"vakon" megbízunk minden külsős függőségben :)-, 
-    /// de itt a hozzáadott saját implementáció van tesztelve ebben a környezetben és a használata is látszik ebből
+    /// Don't trust 3rd party packages!
+    /// Test it for good working and write documentation its implementation
     /// </summary>
     [TestClass]
     public class DependencyInjectionTest
@@ -32,9 +32,9 @@ namespace ArenaTest.ThirdParty.DependecyInjection
             );
 
             di.GetDependency<IService1>();
-            var ser11 = di.GetDependency<IService1>(); //ugyanazt a példányt kapja meg
+            var ser11 = di.GetDependency<IService1>(); //get same object
             di.GetDependency<IService2>();
-            var ser22 = di.GetDependency<IService2>(); //keletkezik még egy Service2
+            var ser22 = di.GetDependency<IService2>(); //generate new Service2
 
             Assert.IsTrue(ser11.RefCounter1 == 1, "DependencyInjectionTests.InstanceLifecycle - Service1 singleton, csak egy lehet");
             Assert.IsTrue(ser22.RefCounter2 == 2, "DependencyInjectionTests.InstanceLifecycle - Service2 kétszer lett létrehozva");
@@ -56,9 +56,9 @@ namespace ArenaTest.ThirdParty.DependecyInjection
                 }
             );
 
-            di.GetDependency<IService1>(); //keletkezik egy Service1
-            var ser2 = di.GetDependency<IService2>(); //keletkezik egy Service2 singleton
-            var ser11 = di.GetDependency<IService1>(); //keletkezik egy másik Service1
+            di.GetDependency<IService1>(); //generate new Service1
+            var ser2 = di.GetDependency<IService2>(); //generate Service2 singleton
+            var ser11 = di.GetDependency<IService1>(); //generate new Service1
 
             Assert.IsTrue(ser11.RefCounter1 == 2, "DependencyInjectionTests.InstanceInject - Servie1-ből két példány keletkezik");
             Assert.IsTrue(ser2.RefCounter2 == 1, "DependencyInjectionTests.InstanceInject - Servie2 singleton, csak egy lehet");
