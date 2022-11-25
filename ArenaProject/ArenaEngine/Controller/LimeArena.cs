@@ -54,12 +54,12 @@ namespace ArenaEngine.Controller
             if (!Init())
                 return;
 
-            WriteLog( "Játék indul.");
+            WriteLog( "Game started.");
 
             int roundCounter = 1;
             do //turns
             {
-                WriteLog("\n" + roundCounter++ + ". kör");
+                WriteLog("\n" + roundCounter++ + ". turns");
                 WriteLog("Number of heroes in arena: " + heroList.Count);
 
                 var battleHeroes = battleSystem.SelectHeroesForBattle(ref heroList);
@@ -88,7 +88,7 @@ namespace ArenaEngine.Controller
 
         string HeroToString(HeroDTO hero)
         {
-            return $"{hero.Id} . {hero.HeroType} hero, power: {hero.Power} [{(hero.IsAlive ? "live" : "died")}] - {hero.Description}";
+            return $"{hero.Id}. {hero.HeroType} hero, power: {hero.Power} [{(hero.IsAlive ? "live" : "died")}] - {hero.Description}";
         }
 
         void WriteLog(string message, ConsoleColor color = ConsoleColor.Yellow)
