@@ -16,13 +16,17 @@ public interface IBattleSystem
 
     List<HeroDTO>? CreateRandomHeroList(uint listSize);
 
+    /// <summary> maximize his power and change live state according to power </summary>
+    void ValidateHero(HeroDTO hero);
+
     /// <summary> take out heroes from heroList and add them in return list </summary>
     List<HeroDTO> SelectHeroesForBattle(ref List<HeroDTO>? heroList);
 
-    /// <summary> Heroes go rest afther the battle </summary>
-    /// <param name="battleHeroes"> two heroes in the battle </param>
-    /// <param name="heroList"> list of all resting heroes </param>
-    void GoRestHeroesAfterBattle(List<HeroDTO> battleHeroes, ref List<HeroDTO>? heroList);
+    /// <summary>
+    /// rest all heroes in list
+    /// </summary>
+    /// <param name="heroList"> resting heroes </param>
+    void RestHeroes(ref List<HeroDTO>? heroList);
 
     /// <summary>
     /// 1v1 battle, changing power and live state according to rules
@@ -30,6 +34,8 @@ public interface IBattleSystem
     /// </summary>
     void PlayBattle(HeroDTO attacker, HeroDTO defender);
 
-    /// <summary> maximize his power and change live state according to power </summary>
-    void ValidateHero(HeroDTO hero);
+    /// <summary> Heroes go back afther the battle </summary>
+    /// <param name="battleHeroes"> two heroes in the battle </param>
+    /// <param name="heroList"> list of all other heroes </param>
+    void GoBackHeroesAfterBattle(List<HeroDTO> battleHeroes, ref List<HeroDTO>? heroList);
 }

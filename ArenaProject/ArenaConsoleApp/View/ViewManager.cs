@@ -5,9 +5,9 @@ namespace ArenaConsoleApp.View;
 public class ViewManager
 {
     private readonly Terminal terminal;
-    private readonly LimeArena arena;
+    private readonly Arena arena;
 
-    public ViewManager(Terminal terminal, LimeArena arena)
+    public ViewManager(Terminal terminal, Arena arena)
     {
         this.terminal = terminal;
         this.arena = arena;

@@ -24,10 +24,10 @@ public class RecruitmentTests
     }
 
     [TestMethod]
-    public void RandomRecruitmentFromLimeArena()
+    public void RandomRecruitmentFromArena()
     {
         var gameConfig = new GameConfigDTO() { MaximumArenaHeroCount = 4 };
-        IBattleSystem battleSystem = new LimeBattleSystem(gameConfig);
+        IBattleSystem battleSystem = new BattleSystem(gameConfig);
 
         Assert.ThrowsException<ArgumentOutOfRangeException>(() => battleSystem.CreateRandomHeroTypeList(5));
         Assert.IsTrue(battleSystem.CreateRandomHeroTypeList(4).Count == 4);

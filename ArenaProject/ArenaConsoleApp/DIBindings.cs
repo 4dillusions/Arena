@@ -16,12 +16,12 @@ public static class DIBindings
             {
                 ViewLocator.Init(di);
 
-                di.Bind<IBattleSystem, LimeBattleSystem>(DILifetimeScopes.Singleton);
+                di.Bind<IBattleSystem, BattleSystem>(DILifetimeScopes.Singleton);
                 di.Bind<GameConfigDTO, GameConfigDTO>(DILifetimeScopes.Singleton);
                    
                 di.Bind<ViewManager, ViewManager>(DILifetimeScopes.Transient);
                 di.Bind<Terminal, Terminal>(DILifetimeScopes.Transient);
-                di.Bind<LimeArena, LimeArena>(DILifetimeScopes.Transient);
+                di.Bind<Arena, Arena>(DILifetimeScopes.Transient);
             }
         );
     }
