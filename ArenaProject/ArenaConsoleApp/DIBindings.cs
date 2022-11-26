@@ -2,30 +2,27 @@
 using ArenaEngine.Controller;
 using ArenaEngine.Core;
 using ArenaEngine.Service;
-using ArenaEngine.ThirdParty.AutoMapper;
 using ArenaEngine.ThirdParty.DependecyInjection;
 
-namespace ArenaConsoleApp
+namespace ArenaConsoleApp;
+
+public static class DIBindings
 {
-    public static class DIBindings
+    public static void BindAllDepencies(IDIManager di)
     {
-        public static void BindAllDepencies(IDIManager di)
-        {
-            di.Init
-            (
-                () =>
-                {
-                    ViewLocator.Init(di);
+        di.Init
+        (
+            () =>
+            {
+                ViewLocator.Init(di);
 
-                    di.Bind<IBattleSystem, LimeBattleSystem>(DILifetimeScopes.Singleton);
-                    di.Bind<GameConfigDTO, GameConfigDTO>(DILifetimeScopes.Singleton);
-                    di.Bind<IAutoMapperMappings, AutoMapperMappings>(DILifetimeScopes.Singleton);
-
-                    di.Bind<ViewManager, ViewManager>(DILifetimeScopes.Transient);
-                    di.Bind<Terminal, Terminal>(DILifetimeScopes.Transient);
-                    di.Bind<LimeArena, LimeArena>(DILifetimeScopes.Transient);
-                }
-            );
-        }
+                di.Bind<IBattleSystem, LimeBattleSystem>(DILifetimeScopes.Singleton);
+                di.Bind<GameConfigDTO, GameConfigDTO>(DILifetimeScopes.Singleton);
+                   
+                di.Bind<ViewManager, ViewManager>(DILifetimeScopes.Transient);
+                di.Bind<Terminal, Terminal>(DILifetimeScopes.Transient);
+                di.Bind<LimeArena, LimeArena>(DILifetimeScopes.Transient);
+            }
+        );
     }
 }

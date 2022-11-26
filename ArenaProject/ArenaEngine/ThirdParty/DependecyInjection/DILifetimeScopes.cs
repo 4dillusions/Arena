@@ -1,14 +1,13 @@
-﻿namespace ArenaEngine.ThirdParty.DependecyInjection
+﻿namespace ArenaEngine.ThirdParty.DependecyInjection;
+
+public enum DILifetimeScopes
 {
-    public enum DILifetimeScopes
-    {
-        /// <summary> mindig új példány keletkezik </summary>
-        Transient,
+    /// <summary> always create new object </summary>
+    Transient,
 
-        /// <summary> csak egy példány lehet </summary>
-        Singleton,
+    /// <summary> only one object </summary>
+    Singleton,
 
-        /// <summary> szálanként egy példány keletkezik </summary>
-        Thread,
-    }
+    /// <summary> one object per thread </summary>
+    Thread,
 }

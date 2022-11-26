@@ -1,12 +1,9 @@
-﻿using System;
+﻿namespace ArenaEngine.ThirdParty.DependecyInjection;
 
-namespace ArenaEngine.ThirdParty.DependecyInjection
+public interface IDIManager
 {
-    public interface IDIManager
-    {
-        void Init(Action bindings);
-        void Bind<TInterface, TImplementation>(DILifetimeScopes scope) where TImplementation : TInterface;
-        void Bind<TInterface, TImplementation>(DILifetimeScopes scope, TImplementation instance) where TImplementation : TInterface, ICloneable;
-        T GetDependency<T>();
-    }
+    void Init(Action? bindings);
+    void Bind<TInterface, TImplementation>(DILifetimeScopes scope) where TImplementation : TInterface;
+    void Bind<TInterface, TImplementation>(DILifetimeScopes scope, TImplementation instance) where TImplementation : TInterface, ICloneable;
+    T GetDependency<T>();
 }

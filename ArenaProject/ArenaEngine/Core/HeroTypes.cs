@@ -1,9 +1,8 @@
-﻿namespace ArenaEngine.Core
+﻿namespace ArenaEngine.Core;
+
+public enum HeroTypes
 {
-    public enum HeroTypes
-    {
-        KnightRider,
-        Swordsman,
-        Bowman
-    }
+    KnightRider,
+    Swordsman,
+    Bowman
 }

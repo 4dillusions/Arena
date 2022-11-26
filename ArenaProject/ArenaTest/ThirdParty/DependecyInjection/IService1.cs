@@ -1,7 +1,6 @@
-﻿namespace ArenaTest.ThirdParty.DependecyInjection
+﻿namespace ArenaTest.ThirdParty.DependecyInjection;
+
+public interface IService1
 {
-    public interface IService1
-    {
-        int RefCounter1 { get; }
-    }
+    int RefCounter1 { get; }
 }
