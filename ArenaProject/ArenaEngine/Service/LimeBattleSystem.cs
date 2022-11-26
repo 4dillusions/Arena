@@ -1,167 +1,167 @@
 ﻿using ArenaEngine.Core;
 using ArenaEngine.Model;
-using System;
-using System.Collections.Generic;
 
-namespace ArenaEngine.Service
+namespace ArenaEngine.Service;
+
+/// <summary>
+/// check game state
+/// select 2 heroes for battle
+/// runs turns
+/// increase/decrease hero's power
+/// runs battle
+/// </summary>
+public class LimeBattleSystem : IBattleSystem
 {
-    /// <summary>
-    /// check game state
-    /// select 2 heroes for battle
-    /// runs turns
-    /// increase/decrease hero's power
-    /// runs battle
-    /// </summary>
-    public class LimeBattleSystem : IBattleSystem
+    private readonly GameConfigDTO gameConfig;
+
+    public LimeBattleSystem(GameConfigDTO gameConfig)
     {
-        private readonly GameConfigDTO gameConfig;
+        this.gameConfig = gameConfig;
+    }
 
-        public LimeBattleSystem(GameConfigDTO gameConfig)
+    public List<HeroTypes> CreateRandomHeroTypeList(uint listSize)
+    {
+        if (listSize > gameConfig.MaximumArenaHeroCount)
+            throw new ArgumentOutOfRangeException();
+
+        return RecruitmentManager<HeroTypes>.CreateRandomTypeList(listSize);
+    }
+
+    public HeroDTO CreateHero(HeroTypes heroType)
+    {
+        var result = new HeroDTO
         {
-            this.gameConfig = gameConfig;
+            HeroType = heroType,
+            IsAlive = true
+        };
+
+        switch (heroType)
+        {
+            case HeroTypes.KnightRider: result.Power = gameConfig.KnightRiderMaxPower; break;
+            case HeroTypes.Swordsman: result.Power = gameConfig.SwordsmanMaxPower; break;
+            case HeroTypes.Bowman: result.Power = gameConfig.BowmanMaxPower; break;
+
+            default: throw new ArgumentOutOfRangeException(nameof(heroType), heroType, null);
         }
 
-        public List<HeroTypes> CreateRandomHeroTypeList(uint listSize)
-        {
-            if (listSize > gameConfig.MaximumArenaHeroCount)
-                throw new ArgumentOutOfRangeException();
+        return result;
+    }
 
-            return RecruitmentManager<HeroTypes>.CreateRandomTypeList(listSize);
+    public List<HeroDTO> CreateRandomHeroList(uint listSize)
+    {
+        var result = new List<HeroDTO>();
+        var heroTypeList = CreateRandomHeroTypeList(listSize);
+
+        for (uint i = 0; i < heroTypeList.Count; i++)
+        {
+            var hero = CreateHero(heroTypeList[(int)i]);
+            hero.Id = i + 1;
+            result.Add(hero);
         }
 
-        public HeroDTO CreateHero(HeroTypes heroType)
-        {
-            var result = new HeroDTO
-            {
-                HeroType = heroType,
-                IsAlive = true
-            };
+        return result;
+    }
 
-            switch (heroType)
-            {
-                case HeroTypes.KnightRider: result.Power = gameConfig.KnightRiderMaxPower; break;
-                case HeroTypes.Swordsman: result.Power = gameConfig.SwordsmanMaxPower; break;
-                case HeroTypes.Bowman: result.Power = gameConfig.BowmanMaxPower; break;
+    public List<HeroDTO> SelectHeroesForBattle(ref List<HeroDTO>? heroList)
+    {
+        var result = new List<HeroDTO>();
+        var random = new Random();
 
-                default: throw new ArgumentOutOfRangeException(nameof(heroType), heroType, null);
-            }
-
+        if (heroList is {Count: < 2})
             return result;
-        }
 
-        public List<HeroDTO> CreateRandomHeroList(uint listSize)
+        for (int i = 0; i < 2; i++)
         {
-            var result = new List<HeroDTO>();
-            var heroTypeList = CreateRandomHeroTypeList(listSize);
-
-            for (uint i = 0; i < heroTypeList.Count; i++)
-            {
-                var hero = CreateHero(heroTypeList[(int)i]);
-                hero.Id = i + 1;
-                result.Add(hero);
-            }
-
-            return result;
-        }
-
-        public List<HeroDTO> SelectHeroesForBattle(ref List<HeroDTO> heroList)
-        {
-            var result = new List<HeroDTO>();
-            var random = new Random();
-
-            if (heroList.Count < 2)
-                return result;
-
-            for (int i = 0; i < 2; i++)
+            if (heroList != null)
             {
                 var heroRandIndex = random.Next(heroList.Count - 1);
                 result.Add(heroList[heroRandIndex]);
                 heroList.RemoveAt(heroRandIndex);
             }
+        }
             
-            return result;
-        }
+        return result;
+    }
 
-        public void GoRestHeroesAfterBattle(List<HeroDTO> battleHeroes, ref List<HeroDTO> heroList)
+    public void GoRestHeroesAfterBattle(List<HeroDTO> battleHeroes, ref List<HeroDTO>? heroList)
+    {
+        foreach (var hero in battleHeroes)
         {
-            foreach (var hero in battleHeroes)
-            {
-                ValidateHero(hero);
+            ValidateHero(hero);
 
-                if (hero.IsAlive)
-                {
-                    hero.Power += gameConfig.RestPowerIncrement; //rest time, increase power
-                    ValidateHero(hero); //maximize power
+            if (hero.IsAlive)
+            {
+                hero.Power += gameConfig.RestPowerIncrement; //rest time, increase power
+                ValidateHero(hero); //maximize power
                     
-                    heroList.Add(hero);
-                }
+                heroList?.Add(hero);
             }
         }
+    }
 
-        public void PlayBattle(HeroDTO attacker, HeroDTO defender)
+    public void PlayBattle(HeroDTO attacker, HeroDTO defender)
+    {
+        void DecrementPowerAfterBattle()
         {
-            void DecrementPowerAfterBattle()
-            {
-                attacker.Power /= 2;
-                defender.Power /= 2;
+            attacker.Power /= 2;
+            defender.Power /= 2;
 
-                ValidateHero(attacker);
-                ValidateHero(defender);
-            }
-
-            //if knight rider is defending
-            if (defender.HeroType == HeroTypes.KnightRider)
-            {
-                switch (attacker.HeroType)
-                {
-                    case HeroTypes.KnightRider: defender.Power = 0; break; //knight rider attacks to other knight rider -> defender die
-                    case HeroTypes.Swordsman: /* nothing happens */ break; //swordsman attacks to knight rider
-                    case HeroTypes.Bowman: defender.Power = new Random().Next(1, 10) <= 6 ? defender.Power : 0;  break; //bowman attacks to knight rider -> knight rider dies 40%, lives 60%
-
-                    default: throw new ArgumentOutOfRangeException();
-                }
-
-                DecrementPowerAfterBattle();
-
-                return;
-            }
-
-            //if swordsman or bowman is defending they die
-            //except, knight rider is attacking to swordsman than knight rider dies
-            if (attacker.HeroType == HeroTypes.KnightRider && defender.HeroType == HeroTypes.Swordsman)
-            {
-                attacker.Power = 0;
-                DecrementPowerAfterBattle();
-
-                return;
-            }
-
-            if (defender.HeroType == HeroTypes.Swordsman || defender.HeroType == HeroTypes.Bowman)
-                defender.Power = 0;
-
-            DecrementPowerAfterBattle();
+            ValidateHero(attacker);
+            ValidateHero(defender);
         }
 
-        public void ValidateHero(HeroDTO hero)
+        //if knight rider is defending
+        if (defender.HeroType == HeroTypes.KnightRider)
         {
-            short maxPower;
-
-            switch (hero.HeroType)
+            switch (attacker.HeroType)
             {
-                case HeroTypes.KnightRider: maxPower = gameConfig.KnightRiderMaxPower; break;
-                case HeroTypes.Swordsman: maxPower = gameConfig.SwordsmanMaxPower; break;
-                case HeroTypes.Bowman: maxPower = gameConfig.BowmanMaxPower; break;
+                case HeroTypes.KnightRider: defender.Power = 0; break; //knight rider attacks to other knight rider -> defender die
+                case HeroTypes.Swordsman: /* nothing happens */ break; //swordsman attacks to knight rider
+                case HeroTypes.Bowman: defender.Power = new Random().Next(1, 10) <= 6 ? defender.Power : 0;  break; //bowman attacks to knight rider -> knight rider dies 40%, lives 60%
 
                 default: throw new ArgumentOutOfRangeException();
             }
 
-            //maximize the power
-            if (hero.Power > maxPower)
-                hero.Power = maxPower;
+            DecrementPowerAfterBattle();
 
-            //the power is less than quarter of the initial/maximum power then hero die
-            if (hero.Power < maxPower / 4)
-                hero.IsAlive = false;
+            return;
         }
+
+        //if swordsman or bowman is defending they die
+        //except, knight rider is attacking to swordsman than knight rider dies
+        if (attacker.HeroType == HeroTypes.KnightRider && defender.HeroType == HeroTypes.Swordsman)
+        {
+            attacker.Power = 0;
+            DecrementPowerAfterBattle();
+
+            return;
+        }
+
+        if (defender.HeroType == HeroTypes.Swordsman || defender.HeroType == HeroTypes.Bowman)
+            defender.Power = 0;
+
+        DecrementPowerAfterBattle();
+    }
+
+    public void ValidateHero(HeroDTO hero)
+    {
+        short maxPower;
+
+        switch (hero.HeroType)
+        {
+            case HeroTypes.KnightRider: maxPower = gameConfig.KnightRiderMaxPower; break;
+            case HeroTypes.Swordsman: maxPower = gameConfig.SwordsmanMaxPower; break;
+            case HeroTypes.Bowman: maxPower = gameConfig.BowmanMaxPower; break;
+
+            default: throw new ArgumentOutOfRangeException();
+        }
+
+        //maximize the power
+        if (hero.Power > maxPower)
+            hero.Power = maxPower;
+
+        //the power is less than quarter of the initial/maximum power then hero die
+        if (hero.Power < maxPower / 4)
+            hero.IsAlive = false;
     }
 }

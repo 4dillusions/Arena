@@ -1,16 +1,15 @@
 ﻿using ArenaEngine.ThirdParty.DependecyInjection;
 
-namespace ArenaConsoleApp.View
+namespace ArenaConsoleApp.View;
+
+public static class ViewLocator
 {
-    public static class ViewLocator
+    private static IDIManager di = null!;
+
+    public static void Init(IDIManager dinjection)
     {
-        private static IDIManager di;
-
-        public static void Init(IDIManager dinjection)
-        {
-            ViewLocator.di = dinjection;
-        }
-
-        public static ViewManager CreateViewManager => di.GetDependency<ViewManager>();
+        di = dinjection;
     }
+
+    public static ViewManager CreateViewManager => di.GetDependency<ViewManager>();
 }

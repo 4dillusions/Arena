@@ -1,14 +1,13 @@
-﻿namespace ArenaEngine.ThirdParty.DependecyInjection
+﻿namespace ArenaEngine.ThirdParty.DependecyInjection;
+
+public enum DILifetimeScopes
 {
-    public enum DILifetimeScopes
-    {
-        /// <summary> always create new object </summary>
-        Transient,
+    /// <summary> always create new object </summary>
+    Transient,
 
-        /// <summary> only one object </summary>
-        Singleton,
+    /// <summary> only one object </summary>
+    Singleton,
 
-        /// <summary> one object per thread </summary>
-        Thread,
-    }
+    /// <summary> one object per thread </summary>
+    Thread,
 }
