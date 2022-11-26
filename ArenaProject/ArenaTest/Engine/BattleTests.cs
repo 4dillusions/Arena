@@ -15,7 +15,7 @@ public class BattleTests
     [TestMethod]
     public void SelectHeroesForBattle()
     {
-        IBattleSystem battleSystem = new LimeBattleSystem(new GameConfigDTO());
+        IBattleSystem battleSystem = new BattleSystem(new GameConfigDTO());
         var heroList = new List<HeroDTO>();
 
         Assert.IsTrue(battleSystem.SelectHeroesForBattle(ref heroList).Count == 0);
@@ -35,7 +35,7 @@ public class BattleTests
     /// the power is less than quarter of the initial/maximum power then hero die
     /// </summary>
     [TestMethod]
-    public void ValidateLimeHero()
+    public void ValidateHero()
     {
         var heroTypeCount = Enum.GetValues(typeof(HeroTypes)).Length;
         var heroes = new HeroDTO[heroTypeCount];
@@ -53,7 +53,7 @@ public class BattleTests
             SwordsmanMaxPower = 20,
             BowmanMaxPower = 30,
         };
-        IBattleSystem battleSystem = new LimeBattleSystem(gameConfig);
+        IBattleSystem battleSystem = new BattleSystem(gameConfig);
 
         for (var i = 0; i < heroTypeCount; i++)
         {
@@ -92,7 +92,7 @@ public class BattleTests
     public void RestHeroes()
     {
         var gameConfig = new GameConfigDTO();
-        IBattleSystem battleSystem = new LimeBattleSystem(gameConfig);
+        IBattleSystem battleSystem = new BattleSystem(gameConfig);
         
         var heroList = new List<HeroDTO>()
         {
@@ -114,7 +114,7 @@ public class BattleTests
     [TestMethod]
     public void PlayBattle()
     {
-        IBattleSystem battleSystem = new LimeBattleSystem(new GameConfigDTO());
+        IBattleSystem battleSystem = new BattleSystem(new GameConfigDTO());
 
         var knightRiderAttacker = battleSystem.CreateHero(HeroTypes.KnightRider);
         var swordsmanAttacker = battleSystem.CreateHero(HeroTypes.Swordsman);
@@ -186,7 +186,7 @@ public class BattleTests
     public void AfterPlayBattle()
     {
         var gameConfig = new GameConfigDTO();
-        IBattleSystem battleSystem = new LimeBattleSystem(gameConfig);
+        IBattleSystem battleSystem = new BattleSystem(gameConfig);
 
         var knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
         var swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
@@ -204,7 +204,7 @@ public class BattleTests
     public void GoBackAfterPlayBattle()
     {
         var gameConfig = new GameConfigDTO();
-        IBattleSystem battleSystem = new LimeBattleSystem(gameConfig);
+        IBattleSystem battleSystem = new BattleSystem(gameConfig);
 
         //after go back same power
         var heroList = new List<HeroDTO>();

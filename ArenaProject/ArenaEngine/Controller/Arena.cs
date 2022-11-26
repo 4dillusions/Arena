@@ -11,7 +11,7 @@ namespace ArenaEngine.Controller;
 /// play turns
 /// stop the game
 /// </summary>
-public class LimeArena
+public class Arena
 {
     private readonly IBattleSystem battleSystem;
 
@@ -20,7 +20,7 @@ public class LimeArena
 
     public event EventHandler<Tuple<string, ConsoleColor>>? OnLogMessage;
 
-    public LimeArena(IBattleSystem battleSystem)
+    public Arena(IBattleSystem battleSystem)
     {
         this.battleSystem = battleSystem;
     }

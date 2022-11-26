@@ -10,11 +10,11 @@ namespace ArenaEngine.Service;
 /// increase/decrease hero's power
 /// runs battle
 /// </summary>
-public class LimeBattleSystem : IBattleSystem
+public class BattleSystem : IBattleSystem
 {
     private readonly GameConfigDTO gameConfig;
 
-    public LimeBattleSystem(GameConfigDTO gameConfig)
+    public BattleSystem(GameConfigDTO gameConfig)
     {
         this.gameConfig = gameConfig;
     }
