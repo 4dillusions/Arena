@@ -62,6 +62,28 @@ public class LimeBattleSystem : IBattleSystem
         return result;
     }
 
+    public void ValidateHero(HeroDTO hero)
+    {
+        short maxPower;
+
+        switch (hero.HeroType)
+        {
+            case HeroTypes.KnightRider: maxPower = gameConfig.KnightRiderMaxPower; break;
+            case HeroTypes.Swordsman: maxPower = gameConfig.SwordsmanMaxPower; break;
+            case HeroTypes.Bowman: maxPower = gameConfig.BowmanMaxPower; break;
+
+            default: throw new ArgumentOutOfRangeException();
+        }
+
+        //maximize the power
+        if (hero.Power > maxPower)
+            hero.Power = maxPower;
+
+        //the power is less than quarter of the initial/maximum power then hero die
+        if (hero.Power < maxPower / 4)
+            hero.IsAlive = false;
+    }
+
     public List<HeroDTO> SelectHeroesForBattle(ref List<HeroDTO>? heroList)
     {
         var result = new List<HeroDTO>();
@@ -83,20 +105,14 @@ public class LimeBattleSystem : IBattleSystem
         return result;
     }
 
-    public void GoRestHeroesAfterBattle(List<HeroDTO> battleHeroes, ref List<HeroDTO>? heroList)
+    public void RestHeroes(ref List<HeroDTO>? heroList)
     {
-        foreach (var hero in battleHeroes)
-        {
-            ValidateHero(hero);
-
-            if (hero.IsAlive)
+        if (heroList != null)
+            foreach (var hero in heroList)
             {
                 hero.Power += gameConfig.RestPowerIncrement; //rest time, increase power
                 ValidateHero(hero); //maximize power
-                    
-                heroList?.Add(hero);
             }
-        }
     }
 
     public void PlayBattle(HeroDTO attacker, HeroDTO defender)
@@ -143,25 +159,17 @@ public class LimeBattleSystem : IBattleSystem
         DecrementPowerAfterBattle();
     }
 
-    public void ValidateHero(HeroDTO hero)
+    public void GoBackHeroesAfterBattle(List<HeroDTO> battleHeroes, ref List<HeroDTO>? heroList)
     {
-        short maxPower;
-
-        switch (hero.HeroType)
+        foreach (var hero in battleHeroes)
         {
-            case HeroTypes.KnightRider: maxPower = gameConfig.KnightRiderMaxPower; break;
-            case HeroTypes.Swordsman: maxPower = gameConfig.SwordsmanMaxPower; break;
-            case HeroTypes.Bowman: maxPower = gameConfig.BowmanMaxPower; break;
+            ValidateHero(hero);
 
-            default: throw new ArgumentOutOfRangeException();
+            if (hero.IsAlive)
+            {
+                ValidateHero(hero); //maximize power
+                heroList?.Add(hero);
+            }
         }
-
-        //maximize the power
-        if (hero.Power > maxPower)
-            hero.Power = maxPower;
-
-        //the power is less than quarter of the initial/maximum power then hero die
-        if (hero.Power < maxPower / 4)
-            hero.IsAlive = false;
     }
 }

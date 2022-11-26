@@ -2,6 +2,7 @@
 using ArenaEngine.Model;
 using ArenaEngine.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics.Metrics;
 
 namespace ArenaTest.Engine;
 
@@ -84,6 +85,27 @@ public class BattleTests
         defender = battleSystem.CreateHero(defender.HeroType);
 
         battleSystem.PlayBattle(attacker, defender);
+    }
+
+    /// <summary> rest heroes in hero list </summary>
+    [TestMethod]
+    public void RestHeroes()
+    {
+        var gameConfig = new GameConfigDTO();
+        IBattleSystem battleSystem = new LimeBattleSystem(gameConfig);
+        
+        var heroList = new List<HeroDTO>()
+        {
+            battleSystem.CreateHero(HeroTypes.KnightRider),
+            battleSystem.CreateHero(HeroTypes.Bowman)
+        };
+
+        heroList[0].Power = 90; //KnightRider
+        battleSystem.RestHeroes(ref heroList);
+        
+        Assert.IsTrue(heroList?.Count == 2);
+        Assert.IsTrue(heroList[0].Power == 90 + gameConfig.RestPowerIncrement); //increased current power
+        Assert.IsTrue(heroList[1].Power == gameConfig.BowmanMaxPower); //maximum power
     }
 
     /// <summary>
@@ -179,25 +201,39 @@ public class BattleTests
     }
 
     [TestMethod]
-    public void GoRestAfterPlayBattle()
+    public void GoBackAfterPlayBattle()
     {
         var gameConfig = new GameConfigDTO();
         IBattleSystem battleSystem = new LimeBattleSystem(gameConfig);
 
+        //after go back same power
         var heroList = new List<HeroDTO>();
         var knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
         var swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
-
-        battleSystem.GoRestHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, ref heroList);
+        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, ref heroList);
         Assert.IsTrue(heroList?.Count == 2);
-        Assert.IsTrue(heroList[0].Power == gameConfig.KnightRiderMaxPower);
-        Assert.IsTrue(heroList[1].Power == gameConfig.SwordsmanMaxPower);
+        Assert.IsTrue(heroList[0].Power == gameConfig.KnightRiderMaxPower); //maximum power
+        Assert.IsTrue(heroList[1].Power == gameConfig.SwordsmanMaxPower); //maximum power
 
-        heroList.Clear();
+        //after go back same power (with lover power than maximum)
+        heroList = new List<HeroDTO>();
+        knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
+        swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
+        knightRider.Power = 100;
+        swordsman.Power = 80;
+        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, ref heroList);
+        Assert.IsTrue(knightRider.Power == 100); //high power is same after go back
+        Assert.IsTrue(swordsman.Power == 80); //high power is same after go back
+
+        //after go back, low power hero died and didn't go back
+        heroList = new List<HeroDTO>();
+        knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
+        swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
         knightRider.Power = 10;
-        battleSystem.GoRestHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, ref heroList);
-        Assert.IsTrue(heroList?.Count == 1);
-        Assert.IsTrue(knightRider.Power == 10);
-        Assert.IsTrue(heroList[0].Power == gameConfig.SwordsmanMaxPower);
+        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, ref heroList);
+        Assert.IsTrue(heroList?.Count == 1); //one hero went back
+        Assert.IsTrue(heroList[0].Id == swordsman.Id); //high power hero is alive and go back
+        Assert.IsTrue(swordsman.Power == gameConfig.SwordsmanMaxPower); //and he hes same maximum power
+        Assert.IsTrue(knightRider.Power == 10 && knightRider.IsAlive == false); //low power hero died
     }
 }

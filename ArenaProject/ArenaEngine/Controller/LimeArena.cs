@@ -61,15 +61,21 @@ public class LimeArena
             {
                 WriteLog("Number of heroes in arena: " + heroList.Count);
 
+                //Select 2 heroes for battle
                 var battleHeroes = battleSystem.SelectHeroesForBattle(ref heroList);
                 battleHeroes[0].Description = "attacker";
                 battleHeroes[1].Description = "defender";
                 WriteHeroesStatsLog("Selected heroes for battle:", battleHeroes);
 
+                //other heroes are resting
+                battleSystem.RestHeroes(ref heroList);
+
+                //play 1v1 battle
                 battleSystem.PlayBattle(battleHeroes[0], battleHeroes[1]);
                 WriteHeroesStatsLog("Heroes state after the battle:", battleHeroes);
 
-                battleSystem.GoRestHeroesAfterBattle(battleHeroes, ref heroList);
+                //go back
+                battleSystem.GoBackHeroesAfterBattle(battleHeroes, ref heroList);
             }
         } while (heroList is {Count: > 1});
 
