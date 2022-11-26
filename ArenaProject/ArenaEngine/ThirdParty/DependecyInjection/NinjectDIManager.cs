@@ -1,7 +1,6 @@
-﻿using System;
-using System.Reflection;
-using Ninject;
+﻿using Ninject;
 using Ninject.Modules;
+using System.Reflection;
 
 namespace ArenaEngine.ThirdParty.DependecyInjection
 {
