@@ -1,13 +1,31 @@
-# Arena <img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"> <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"> <img src="https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0"> <img src="https://img.shields.io/badge/-.NET%207.0-blueviolet">
+Arena <img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"> <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"> <img src="https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0"> <img src="https://img.shields.io/badge/-.NET%208.0-blueviolet">
 [![Azure Static Web Apps CI/CD](https://github.com/4dillusions/Arena/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/4dillusions/Arena/actions/workflows/dotnet-desktop.yml)
-
+=====
 <p align="center">
   <img src="Doc/battle.jpg">
 </p>
 
 Arena is a simple Turn-based 1v1 battle simulator.
 
-### Specification
+Clone
+-----
+```bash
+git clone https://github.com/4dillusions/Arena.git
+```
+
+Build
+------
+Open ArenaProject.sln and build solution
+
+Run (example)
+------
+```bash
+cd Arena\ArenaProject\ArenaConsoleApp\bin\Debug\net8.0
+ArenaConsoleApp.exe 4
+```
+
+Specification
+--------------
 There are many heroes in the arena like bowman, knight rider and swordsman. Every hero have an id, power and can attack and defense according to rules:
 
 Bowman (attack)
