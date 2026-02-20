@@ -13,16 +13,6 @@ Architecture
   <img src="Doc/architecture.svg">
 </p>
 
-The project follows a layered architecture:
-
-| Layer | Responsibility |
-|---|---|
-| **Console App** | Entry point, DI configuration, terminal output |
-| **Arena Controller** | Game loop — turn management, event dispatching |
-| **Battle Service** | Hero generation, battle logic, power management |
-| **Core / Model** | Data objects, hero types, utility classes |
-| **DI Infrastructure** | Swappable dependency injection — Ninject-backed |
-
 Clone
 -----
 ```bash
