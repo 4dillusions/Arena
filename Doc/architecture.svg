@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 640" width="600" height="640" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1c22"/>
+      <stop offset="100%" stop-color="#16181f"/>
+    </linearGradient>
+    <linearGradient id="accent-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8b1a1a"/>
+      <stop offset="100%" stop-color="#a02020"/>
+    </linearGradient>
+    <linearGradient id="normal-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22262f"/>
+      <stop offset="100%" stop-color="#272b35"/>
+    </linearGradient>
+    <linearGradient id="arrow-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a3f4b"/>
+      <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="640" fill="url(#bg)"/>
+
+  <!-- Subtle top glow -->
+  <ellipse cx="300" cy="0" rx="260" ry="80" fill="#8b1a1a" opacity="0.08"/>
+
+  <!-- Title -->
+  <text x="300" y="44" text-anchor="middle" font-size="28" font-weight="900" letter-spacing="10" fill="#f0c94a" filter="url(#glow)">ARENA</text>
+  <text x="300" y="62" text-anchor="middle" font-size="11" letter-spacing="3" fill="#7a8494" font-style="italic">Architecture · .NET 8 · C#</text>
+
+  <!-- Decorative rule -->
+  <line x1="60" y1="74" x2="255" y2="74" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+  <rect x="296" y="70" width="8" height="8" fill="#c9a84c" transform="rotate(45 300 74)" opacity="0.7"/>
+  <line x1="345" y1="74" x2="540" y2="74" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- ── LAYER 1: Console App ── -->
+  <rect x="60" y="94" width="480" height="72" rx="4" fill="url(#normal-grad)" stroke="#3a3f4b" stroke-width="1"/>
+  <!-- corner accents -->
+  <polyline points="60,104 60,94 70,94" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
+  <polyline points="530,158 540,158 540,148" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
+  <!-- icon bg -->
+  <rect x="72" y="106" width="44" height="44" rx="3" fill="#1a1c22" opacity="0.6"/>
+  <text x="94" y="134" text-anchor="middle" font-size="22">🖥️</text>
+  <!-- text -->
+  <text x="128" y="120" font-size="13" font-weight="700" letter-spacing="2" fill="#c9a84c">CONSOLE APP</text>
+  <text x="128" y="136" font-size="12" fill="#7a8494" font-style="italic">Entry point, DI configuration, terminal output</text>
+  <!-- chips -->
+  <rect x="128" y="144" width="72" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
+  <text x="164" y="155" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">Program.cs</text>
+  <rect x="206" y="144" width="64" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
+  <text x="238" y="155" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">DIBindings</text>
+  <rect x="276" y="144" width="52" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
+  <text x="302" y="155" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">Terminal</text>
+  <rect x="334" y="144" width="78" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
+  <text x="373" y="155" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">ViewManager</text>
+
+  <!-- Arrow 1 -->
+  <line x1="300" y1="166" x2="300" y2="188" stroke="url(#arrow-grad)" stroke-width="1.5"/>
+  <polygon points="295,186 305,186 300,194" fill="#c9a84c" opacity="0.7"/>
+  <text x="315" y="182" font-size="9" fill="#7a8494" font-style="italic" letter-spacing="1">event / DI</text>
+
+  <!-- ── LAYER 2: Arena Controller ── -->
+  <rect x="60" y="196" width="480" height="72" rx="4" fill="url(#accent-grad)" stroke="#8b1a1a" stroke-width="1"/>
+  <polyline points="60,206 60,196 70,196" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
+  <polyline points="530,260 540,260 540,250" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
+  <rect x="72" y="208" width="44" height="44" rx="3" fill="#1a1c22" opacity="0.4"/>
+  <text x="94" y="236" text-anchor="middle" font-size="22">🏟️</text>
+  <text x="128" y="222" font-size="13" font-weight="700" letter-spacing="2" fill="#f0c94a">ARENA CONTROLLER</text>
+  <text x="128" y="238" font-size="12" fill="#e0b0b0" font-style="italic">Game loop — turn management, event dispatching</text>
+  <rect x="128" y="246" width="56" height="16" rx="2" fill="#1a1c22" stroke="#8b1a1a" stroke-width="0.8"/>
+  <text x="156" y="257" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">Arena.cs</text>
+
+  <!-- Arrow 2 -->
+  <line x1="300" y1="268" x2="300" y2="290" stroke="url(#arrow-grad)" stroke-width="1.5"/>
+  <polygon points="295,288 305,288 300,296" fill="#c9a84c" opacity="0.7"/>
+  <text x="315" y="284" font-size="9" fill="#7a8494" font-style="italic" letter-spacing="1">IBattleSystem</text>
+
+  <!-- ── LAYER 3: Battle Service ── -->
+  <rect x="60" y="298" width="480" height="72" rx="4" fill="url(#accent-grad)" stroke="#8b1a1a" stroke-width="1"/>
+  <polyline points="60,308 60,298 70,298" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
+  <polyline points="530,362 540,362 540,352" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
+  <rect x="72" y="310" width="44" height="44" rx="3" fill="#1a1c22" opacity="0.4"/>
+  <text x="94" y="338" text-anchor="middle" font-size="22">⚡</text>
+  <text x="128" y="324" font-size="13" font-weight="700" letter-spacing="2" fill="#f0c94a">BATTLE SERVICE</text>
+  <text x="128" y="340" font-size="12" fill="#e0b0b0" font-style="italic">Hero generation, battle logic, power management</text>
+  <rect x="128" y="348" width="82" height="16" rx="2" fill="#1a1c22" stroke="#8b1a1a" stroke-width="0.8"/>
+  <text x="169" y="359" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">BattleSystem</text>
+  <rect x="216" y="348" width="80" height="16" rx="2" fill="#1a1c22" stroke="#8b1a1a" stroke-width="0.8"/>
+  <text x="256" y="359" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">IBattleSystem</text>
+
+  <!-- Arrow 3 -->
+  <line x1="300" y1="370" x2="300" y2="392" stroke="url(#arrow-grad)" stroke-width="1.5"/>
+  <polygon points="295,390 305,390 300,398" fill="#c9a84c" opacity="0.7"/>
+  <text x="315" y="386" font-size="9" fill="#7a8494" font-style="italic" letter-spacing="1">model / config</text>
+
+  <!-- ── LAYER 4: Core / Model ── -->
+  <rect x="60" y="400" width="480" height="72" rx="4" fill="url(#normal-grad)" stroke="#3a3f4b" stroke-width="1"/>
+  <polyline points="60,410 60,400 70,400" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
+  <polyline points="530,464 540,464 540,454" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
+  <rect x="72" y="412" width="44" height="44" rx="3" fill="#1a1c22" opacity="0.6"/>
+  <text x="94" y="440" text-anchor="middle" font-size="22">🛡️</text>
+  <text x="128" y="426" font-size="13" font-weight="700" letter-spacing="2" fill="#c9a84c">CORE / MODEL</text>
+  <text x="128" y="442" font-size="12" fill="#7a8494" font-style="italic">Data objects, hero types, utility classes</text>
+  <rect x="128" y="450" width="52" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
+  <text x="154" y="461" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">HeroDTO</text>
+  <rect x="186" y="450" width="62" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
+  <text x="217" y="461" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">HeroTypes</text>
+  <rect x="254" y="450" width="86" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
+  <text x="297" y="461" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">GameConfigDTO</text>
+  <rect x="346" y="450" width="138" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
+  <text x="415" y="461" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">RecruitmentManager&lt;T&gt;</text>
+
+  <!-- Arrow 4 -->
+  <line x1="300" y1="472" x2="300" y2="494" stroke="url(#arrow-grad)" stroke-width="1.5"/>
+  <polygon points="295,492 305,492 300,500" fill="#c9a84c" opacity="0.7"/>
+  <text x="315" y="488" font-size="9" fill="#7a8494" font-style="italic" letter-spacing="1">wraps</text>
+
+  <!-- ── LAYER 5: DI Infrastructure ── -->
+  <rect x="60" y="502" width="480" height="72" rx="4" fill="url(#normal-grad)" stroke="#3a3f4b" stroke-width="1"/>
+  <polyline points="60,512 60,502 70,502" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
+  <polyline points="530,566 540,566 540,556" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
+  <rect x="72" y="514" width="44" height="44" rx="3" fill="#1a1c22" opacity="0.6"/>
+  <text x="94" y="542" text-anchor="middle" font-size="22">💉</text>
+  <text x="128" y="528" font-size="13" font-weight="700" letter-spacing="2" fill="#c9a84c">DI INFRASTRUCTURE</text>
+  <text x="128" y="544" font-size="12" fill="#7a8494" font-style="italic">Swappable dependency injection — Ninject-backed</text>
+  <rect x="128" y="552" width="68" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
+  <text x="162" y="563" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">IDIManager</text>
+  <rect x="202" y="552" width="64" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
+  <text x="234" y="563" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">DIManager</text>
+  <rect x="272" y="552" width="110" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
+  <text x="327" y="563" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">NinjectDIManager</text>
+
+  <!-- Bottom rule -->
+  <line x1="60" y1="608" x2="255" y2="608" stroke="#c9a84c" stroke-width="0.5" opacity="0.25"/>
+  <rect x="296" y="604" width="8" height="8" fill="#c9a84c" transform="rotate(45 300 608)" opacity="0.4"/>
+  <line x1="345" y1="608" x2="540" y2="608" stroke="#c9a84c" stroke-width="0.5" opacity="0.25"/>
+</svg>
