@@ -2,67 +2,40 @@ name: Arena
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "Arena_v1_0", "Arena_v1_1", "Arena_v1_2" ]
   pull_request:
-    branches: [ "main", "Arena_v1_1" ]
+    branches: [ "main" ]
 
 jobs:
-
   build:
-
     strategy:
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
         configuration: [Debug, Release]
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
 
     env:
-      Solution_Name: ArenaProject\ArenaProject.sln               # Replace with your solution name, i.e. MyWpfApp.sln.
-      Test_Project_Path: ArenaProject\ArenaTest\ArenaTest.csproj # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
-      
+      DOTNET_VERSION: 8.0.x
+      SOLUTION_PATH: ArenaProject/ArenaProject.sln
+      TEST_PROJECT_PATH: ArenaProject/ArenaTest/ArenaTest.csproj
+
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
-    # Install the .NET
-    - name: Install .NET
-      uses: actions/setup-dotnet@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
-      
-    # Setup NuGet.exe
-    - name: Setup NuGet.exe for use with action
-      uses: nuget/setup-nuget@v1
-      with:
-        nuget-api-key: ${{ secrets.NuGetAPIKey }}
-        nuget-version: '5.x'
-        run: nuget restore Solution_Name
-    
-    # Restore projects for NuGet
-    - name: Restore NuGet on ArenaTest
-      run: dotnet restore ArenaProject\ArenaTest\ArenaTest.csproj
-      
-    - name: Restore NuGet on ArenaEngine
-      run: dotnet restore ArenaProject\ArenaEngine\ArenaEngine.csproj
-      
-    - name: Restore NuGet on ArenaConsoleApp
-      run: dotnet restore ArenaProject\ArenaConsoleApp\ArenaConsoleApp.csproj
+    - name: Restore
+      run: dotnet restore ${{ env.SOLUTION_PATH }}
 
-    # Build the solution
     - name: Build
-      run: msbuild -m $env:Solution_Name /property:Configuration=${{ matrix.configuration }}
-        
-    # Add vstest to the PATH
-    - name: Setup VSTest Path
-      uses: Malcolmnixon/Setup-VSTest@v4
-      
-    # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: vstest.console.exe ArenaProject\ArenaTest\bin\${{ matrix.configuration }}\net8.0\ArenaTest.dll
-    
+      run: dotnet build ${{ env.SOLUTION_PATH }} --configuration ${{ matrix.configuration }} --no-restore
+
+    - name: Test
+      run: dotnet test ${{ env.TEST_PROJECT_PATH }} --configuration ${{ matrix.configuration }} --no-build --verbosity normal
