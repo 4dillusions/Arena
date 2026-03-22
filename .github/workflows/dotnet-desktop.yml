@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     env:
-      DOTNET_VERSION: 8.0.x
+      DOTNET_VERSION: 10.0.x
       SOLUTION_PATH: ArenaProject/ArenaProject.sln
       TEST_PROJECT_PATH: ArenaProject/ArenaTest/ArenaTest.csproj
 

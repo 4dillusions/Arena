@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Notepad++ temporary
 *.bak
+
+# Rider
+.idea/
