@@ -1,4 +1,4 @@
-Arena <img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"> <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"> <img src="https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0"> <img src="https://img.shields.io/badge/-.NET%208.0-blueviolet">
+Arena <img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"> <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"> <img src="https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0"> <img src="https://img.shields.io/badge/-.NET%2010.0-blueviolet">
 [![Azure Static Web Apps CI/CD](https://github.com/4dillusions/Arena/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/4dillusions/Arena/actions/workflows/dotnet-desktop.yml)
 =====
 <p align="center">
@@ -7,17 +7,28 @@ Arena <img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&
 
 Arena is a simple Turn-based 1v1 battle simulator.
 
+Clone
+-----
+Clone the entire project including the submodules:<br>
+```bash
+git clone --recurse-submodules https://github.com/4dillusions/Arena.git
+```
+
+If the project is already cloned and you forgot to fetch the submodules:<br>
+```bash
+git submodule update --init --recursive
+```
+
+If the submodules have been updated and you want to fetch the latest changes:<br>
+```bash
+git submodule update --remote --merge
+```
+
 Architecture
 --------------
 <p align="center">
   <img src="Doc/architecture.svg">
 </p>
-
-Clone
------
-```bash
-git clone https://github.com/4dillusions/Arena.git
-```
 
 Build
 ------
