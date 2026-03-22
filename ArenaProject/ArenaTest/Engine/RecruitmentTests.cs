@@ -14,13 +14,13 @@ public class RecruitmentTests
     public void RandomRecruitment()
     {
         var heroTypeList = RecruitmentManager<HeroTypes>.CreateRandomTypeList(10);
-            
-        Assert.IsNotNull(heroTypeList);
+        var validHeroTypes = Enum.GetValues<HeroTypes>();
 
-        //after generate list with 10 items, there must be at least one of each item
-        Assert.IsTrue(heroTypeList.Any(t => t == HeroTypes.KnightRider));
-        Assert.IsTrue(heroTypeList.Any(t => t == HeroTypes.Swordsman));
-        Assert.IsTrue(heroTypeList.Any(t => t == HeroTypes.Bowman));
+        Assert.IsNotNull(heroTypeList);
+        Assert.AreEqual(10, heroTypeList.Count);
+
+        foreach (var heroType in heroTypeList)
+            CollectionAssert.Contains(validHeroTypes, heroType);
     }
 
     [TestMethod]
