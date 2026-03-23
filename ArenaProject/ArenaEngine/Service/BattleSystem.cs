@@ -31,7 +31,7 @@ public class BattleSystem : IBattleSystem
         if (listSize > gameConfig.MaximumArenaHeroCount)
             throw new ArgumentOutOfRangeException();
 
-        return RecruitmentManager<HeroTypes>.CreateRandomTypeList(listSize);
+        return RecruitmentManager<HeroTypes>.CreateRandomTypeList(listSize, randomProvider);
     }
 
     public HeroDTO CreateHero(HeroTypes heroType)

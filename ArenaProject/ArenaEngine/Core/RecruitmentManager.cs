@@ -9,13 +9,17 @@ public static class RecruitmentManager<TTypes> where TTypes : Enum
     /// <returns> returns random generated enum list </returns>
     public static List<TTypes> CreateRandomTypeList(uint listSize)
     {
+        return CreateRandomTypeList(listSize, new SystemRandomProvider());
+    }
+
+    public static List<TTypes> CreateRandomTypeList(uint listSize, IRandomProvider randomProvider)
+    {
         var result = new List<TTypes>();
-        var random = new Random();
 
         var enumCount = Enum.GetValues(typeof(TTypes)).Length;
         for (var i = 0; i < listSize; i++)
         {
-            var randEnumItemIndex = random.Next(enumCount);
+            var randEnumItemIndex = randomProvider.Next(enumCount);
             result.Add((TTypes)Enum.ToObject(typeof(TTypes), randEnumItemIndex));
         }
 
