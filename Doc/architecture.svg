@@ -1,141 +1,141 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 640" width="600" height="640" font-family="'Segoe UI', Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 780" width="960" height="780" font-family="'Segoe UI', Arial, sans-serif">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#1a1c22"/>
-      <stop offset="100%" stop-color="#16181f"/>
+      <stop offset="0%" stop-color="#11151b"/>
+      <stop offset="100%" stop-color="#171c24"/>
     </linearGradient>
-    <linearGradient id="accent-grad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#8b1a1a"/>
-      <stop offset="100%" stop-color="#a02020"/>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#232b37"/>
+      <stop offset="100%" stop-color="#1d2430"/>
     </linearGradient>
-    <linearGradient id="normal-grad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#22262f"/>
-      <stop offset="100%" stop-color="#272b35"/>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8d241f"/>
+      <stop offset="100%" stop-color="#c03b2f"/>
     </linearGradient>
-    <linearGradient id="arrow-grad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#3a3f4b"/>
-      <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.8"/>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d4a94d"/>
+      <stop offset="100%" stop-color="#f4d88d"/>
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.28"/>
     </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d4a94d"/>
+    </marker>
   </defs>
 
-  <!-- Background -->
-  <rect width="600" height="640" fill="url(#bg)"/>
+  <rect width="960" height="780" fill="url(#bg)"/>
+  <ellipse cx="480" cy="8" rx="320" ry="84" fill="#c03b2f" opacity="0.09"/>
 
-  <!-- Subtle top glow -->
-  <ellipse cx="300" cy="0" rx="260" ry="80" fill="#8b1a1a" opacity="0.08"/>
+  <text x="480" y="46" text-anchor="middle" font-size="28" font-weight="800" letter-spacing="8" fill="#f2d48a">ARENA</text>
+  <text x="480" y="68" text-anchor="middle" font-size="13" letter-spacing="2" fill="#8c97a8">Current architecture · .NET 10 · C#</text>
 
-  <!-- Title -->
-  <text x="300" y="44" text-anchor="middle" font-size="28" font-weight="900" letter-spacing="10" fill="#f0c94a" filter="url(#glow)">ARENA</text>
-  <text x="300" y="62" text-anchor="middle" font-size="11" letter-spacing="3" fill="#7a8494" font-style="italic">Architecture · .NET 8 · C#</text>
+  <rect x="50" y="110" width="265" height="188" rx="10" fill="url(#panel)" stroke="#3b4657" filter="url(#shadow)"/>
+  <rect x="50" y="110" width="265" height="38" rx="10" fill="url(#accent)"/>
+  <text x="182" y="135" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="1.5" fill="#f7e8c0">ArenaConsoleApp</text>
+  <text x="74" y="175" font-size="13" fill="#f4d88d" font-weight="700">Responsibilities</text>
+  <text x="74" y="198" font-size="12" fill="#c4ccd8">• Entry point</text>
+  <text x="74" y="218" font-size="12" fill="#c4ccd8">• DI setup via FW4di.Dotnet.Core</text>
+  <text x="74" y="238" font-size="12" fill="#c4ccd8">• Terminal / view layer</text>
+  <rect x="72" y="252" width="76" height="18" rx="4" fill="#12171f" stroke="#465062"/>
+  <text x="110" y="265" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">Program.cs</text>
+  <rect x="154" y="252" width="86" height="18" rx="4" fill="#12171f" stroke="#465062"/>
+  <text x="197" y="265" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">DIBindings</text>
+  <rect x="72" y="276" width="72" height="18" rx="4" fill="#12171f" stroke="#465062"/>
+  <text x="108" y="289" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">Terminal</text>
+  <rect x="150" y="276" width="92" height="18" rx="4" fill="#12171f" stroke="#465062"/>
+  <text x="196" y="289" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">ViewManager</text>
 
-  <!-- Decorative rule -->
-  <line x1="60" y1="74" x2="255" y2="74" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
-  <rect x="296" y="70" width="8" height="8" fill="#c9a84c" transform="rotate(45 300 74)" opacity="0.7"/>
-  <line x1="345" y1="74" x2="540" y2="74" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+  <rect x="355" y="110" width="315" height="580" rx="10" fill="url(#panel)" stroke="#3b4657" filter="url(#shadow)"/>
+  <rect x="355" y="110" width="315" height="38" rx="10" fill="url(#accent)"/>
+  <text x="512" y="135" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="1.5" fill="#f7e8c0">ArenaEngine</text>
+  <text x="382" y="173" font-size="12" fill="#93a0b3">Core gameplay and orchestration</text>
 
-  <!-- ── LAYER 1: Console App ── -->
-  <rect x="60" y="94" width="480" height="72" rx="4" fill="url(#normal-grad)" stroke="#3a3f4b" stroke-width="1"/>
-  <!-- corner accents -->
-  <polyline points="60,104 60,94 70,94" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
-  <polyline points="530,158 540,158 540,148" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
-  <!-- icon bg -->
-  <rect x="72" y="106" width="44" height="44" rx="3" fill="#1a1c22" opacity="0.6"/>
-  <text x="94" y="134" text-anchor="middle" font-size="22">🖥️</text>
-  <!-- text -->
-  <text x="128" y="120" font-size="13" font-weight="700" letter-spacing="2" fill="#c9a84c">CONSOLE APP</text>
-  <text x="128" y="136" font-size="12" fill="#7a8494" font-style="italic">Entry point, DI configuration, terminal output</text>
-  <!-- chips -->
-  <rect x="128" y="144" width="72" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
-  <text x="164" y="155" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">Program.cs</text>
-  <rect x="206" y="144" width="64" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
-  <text x="238" y="155" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">DIBindings</text>
-  <rect x="276" y="144" width="52" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
-  <text x="302" y="155" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">Terminal</text>
-  <rect x="334" y="144" width="78" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
-  <text x="373" y="155" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">ViewManager</text>
+  <rect x="380" y="192" width="266" height="122" rx="8" fill="#141a22" stroke="#3b4657"/>
+  <text x="401" y="216" font-size="13" fill="#f4d88d" font-weight="700">Controller</text>
+  <text x="401" y="238" font-size="12" fill="#c4ccd8">• Arena game loop</text>
+  <text x="401" y="258" font-size="12" fill="#c4ccd8">• Round result modeling</text>
+  <text x="401" y="278" font-size="12" fill="#c4ccd8">• Log formatting abstraction</text>
+  <rect x="396" y="288" width="96" height="18" rx="4" fill="#1d2430" stroke="#465062"/>
+  <text x="444" y="301" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">Arena.cs</text>
+  <rect x="498" y="288" width="132" height="18" rx="4" fill="#1d2430" stroke="#465062"/>
+  <text x="564" y="301" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">ArenaRoundResult</text>
+  <rect x="452" y="264" width="148" height="18" rx="4" fill="#1d2430" stroke="#465062"/>
+  <text x="526" y="277" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">ArenaLogFormatter</text>
 
-  <!-- Arrow 1 -->
-  <line x1="300" y1="166" x2="300" y2="188" stroke="url(#arrow-grad)" stroke-width="1.5"/>
-  <polygon points="295,186 305,186 300,194" fill="#c9a84c" opacity="0.7"/>
-  <text x="315" y="182" font-size="9" fill="#7a8494" font-style="italic" letter-spacing="1">event / DI</text>
+  <rect x="380" y="336" width="266" height="168" rx="8" fill="#141a22" stroke="#3b4657"/>
+  <text x="401" y="360" font-size="13" fill="#f4d88d" font-weight="700">Service</text>
+  <text x="401" y="382" font-size="12" fill="#c4ccd8">• Battle selection result</text>
+  <text x="401" y="402" font-size="12" fill="#c4ccd8">• Battle rules and power loss</text>
+  <text x="401" y="422" font-size="12" fill="#c4ccd8">• Survivor collection</text>
+  <text x="401" y="442" font-size="12" fill="#c4ccd8">• Hero generation via injected randomness</text>
+  <rect x="394" y="454" width="98" height="18" rx="4" fill="#1d2430" stroke="#465062"/>
+  <text x="443" y="467" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">BattleSystem</text>
+  <rect x="498" y="454" width="96" height="18" rx="4" fill="#1d2430" stroke="#465062"/>
+  <text x="546" y="467" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">IBattleSystem</text>
+  <rect x="404" y="478" width="148" height="18" rx="4" fill="#1d2430" stroke="#465062"/>
+  <text x="478" y="491" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">BattleSelectionResult</text>
 
-  <!-- ── LAYER 2: Arena Controller ── -->
-  <rect x="60" y="196" width="480" height="72" rx="4" fill="url(#accent-grad)" stroke="#8b1a1a" stroke-width="1"/>
-  <polyline points="60,206 60,196 70,196" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
-  <polyline points="530,260 540,260 540,250" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
-  <rect x="72" y="208" width="44" height="44" rx="3" fill="#1a1c22" opacity="0.4"/>
-  <text x="94" y="236" text-anchor="middle" font-size="22">🏟️</text>
-  <text x="128" y="222" font-size="13" font-weight="700" letter-spacing="2" fill="#f0c94a">ARENA CONTROLLER</text>
-  <text x="128" y="238" font-size="12" fill="#e0b0b0" font-style="italic">Game loop — turn management, event dispatching</text>
-  <rect x="128" y="246" width="56" height="16" rx="2" fill="#1a1c22" stroke="#8b1a1a" stroke-width="0.8"/>
-  <text x="156" y="257" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">Arena.cs</text>
+  <rect x="380" y="526" width="266" height="144" rx="8" fill="#141a22" stroke="#3b4657"/>
+  <text x="401" y="550" font-size="13" fill="#f4d88d" font-weight="700">Core / Model</text>
+  <text x="401" y="572" font-size="12" fill="#c4ccd8">• HeroDTO / HeroTypes</text>
+  <text x="401" y="592" font-size="12" fill="#c4ccd8">• GameConfigDTO</text>
+  <text x="401" y="612" font-size="12" fill="#c4ccd8">• RecruitmentManager&lt;T&gt;</text>
+  <rect x="394" y="620" width="74" height="18" rx="4" fill="#1d2430" stroke="#465062"/>
+  <text x="431" y="633" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">HeroDTO</text>
+  <rect x="474" y="620" width="84" height="18" rx="4" fill="#1d2430" stroke="#465062"/>
+  <text x="516" y="633" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">HeroTypes</text>
+  <rect x="394" y="644" width="112" height="18" rx="4" fill="#1d2430" stroke="#465062"/>
+  <text x="450" y="657" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">GameConfigDTO</text>
+  <rect x="512" y="644" width="126" height="18" rx="4" fill="#1d2430" stroke="#465062"/>
+  <text x="575" y="657" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">RecruitmentMgr&lt;T&gt;</text>
 
-  <!-- Arrow 2 -->
-  <line x1="300" y1="268" x2="300" y2="290" stroke="url(#arrow-grad)" stroke-width="1.5"/>
-  <polygon points="295,288 305,288 300,296" fill="#c9a84c" opacity="0.7"/>
-  <text x="315" y="284" font-size="9" fill="#7a8494" font-style="italic" letter-spacing="1">IBattleSystem</text>
+  <rect x="705" y="110" width="185" height="240" rx="10" fill="url(#panel)" stroke="#3b4657" filter="url(#shadow)"/>
+  <rect x="705" y="110" width="185" height="38" rx="10" fill="url(#accent)"/>
+  <text x="797" y="135" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="1.5" fill="#f7e8c0">FirstParty</text>
+  <text x="797" y="166" text-anchor="middle" font-size="12" fill="#93a0b3">Git submodule</text>
+  <text x="729" y="198" font-size="13" fill="#f4d88d" font-weight="700">FW4di.Dotnet.Core</text>
+  <text x="729" y="220" font-size="12" fill="#c4ccd8">• DependencyInjection</text>
+  <text x="729" y="240" font-size="12" fill="#c4ccd8">• IDIManager / DIManager</text>
+  <text x="729" y="260" font-size="12" fill="#c4ccd8">• NinjectDIManager</text>
+  <text x="729" y="280" font-size="12" fill="#c4ccd8">• Own test suite in submodule</text>
+  <rect x="725" y="307" width="145" height="18" rx="4" fill="#12171f" stroke="#465062"/>
+  <text x="797" y="320" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">FW4di.Dotnet.Core</text>
 
-  <!-- ── LAYER 3: Battle Service ── -->
-  <rect x="60" y="298" width="480" height="72" rx="4" fill="url(#accent-grad)" stroke="#8b1a1a" stroke-width="1"/>
-  <polyline points="60,308 60,298 70,298" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
-  <polyline points="530,362 540,362 540,352" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
-  <rect x="72" y="310" width="44" height="44" rx="3" fill="#1a1c22" opacity="0.4"/>
-  <text x="94" y="338" text-anchor="middle" font-size="22">⚡</text>
-  <text x="128" y="324" font-size="13" font-weight="700" letter-spacing="2" fill="#f0c94a">BATTLE SERVICE</text>
-  <text x="128" y="340" font-size="12" fill="#e0b0b0" font-style="italic">Hero generation, battle logic, power management</text>
-  <rect x="128" y="348" width="82" height="16" rx="2" fill="#1a1c22" stroke="#8b1a1a" stroke-width="0.8"/>
-  <text x="169" y="359" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">BattleSystem</text>
-  <rect x="216" y="348" width="80" height="16" rx="2" fill="#1a1c22" stroke="#8b1a1a" stroke-width="0.8"/>
-  <text x="256" y="359" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">IBattleSystem</text>
+  <rect x="690" y="370" width="200" height="186" rx="10" fill="url(#panel)" stroke="#3b4657" filter="url(#shadow)"/>
+  <rect x="690" y="370" width="200" height="38" rx="10" fill="url(#accent)"/>
+  <text x="790" y="395" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="1.5" fill="#f7e8c0">ArenaTest</text>
+  <text x="714" y="432" font-size="13" fill="#f4d88d" font-weight="700">Coverage</text>
+  <text x="714" y="454" font-size="12" fill="#c4ccd8">• Battle rules</text>
+  <text x="714" y="474" font-size="12" fill="#c4ccd8">• Recruitment randomness</text>
+  <text x="714" y="494" font-size="12" fill="#c4ccd8">• Converter helpers</text>
+  <text x="714" y="514" font-size="12" fill="#c4ccd8">• References ArenaEngine only</text>
+  <rect x="713" y="528" width="118" height="18" rx="4" fill="#12171f" stroke="#465062"/>
+  <text x="772" y="541" text-anchor="middle" font-size="10" fill="#efe3c1" font-family="monospace">ArenaTest.csproj</text>
 
-  <!-- Arrow 3 -->
-  <line x1="300" y1="370" x2="300" y2="392" stroke="url(#arrow-grad)" stroke-width="1.5"/>
-  <polygon points="295,390 305,390 300,398" fill="#c9a84c" opacity="0.7"/>
-  <text x="315" y="386" font-size="9" fill="#7a8494" font-style="italic" letter-spacing="1">model / config</text>
+  <line x1="315" y1="194" x2="355" y2="194" stroke="url(#gold)" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="334" y="183" text-anchor="middle" font-size="10" fill="#93a0b3">uses</text>
 
-  <!-- ── LAYER 4: Core / Model ── -->
-  <rect x="60" y="400" width="480" height="72" rx="4" fill="url(#normal-grad)" stroke="#3a3f4b" stroke-width="1"/>
-  <polyline points="60,410 60,400 70,400" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
-  <polyline points="530,464 540,464 540,454" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
-  <rect x="72" y="412" width="44" height="44" rx="3" fill="#1a1c22" opacity="0.6"/>
-  <text x="94" y="440" text-anchor="middle" font-size="22">🛡️</text>
-  <text x="128" y="426" font-size="13" font-weight="700" letter-spacing="2" fill="#c9a84c">CORE / MODEL</text>
-  <text x="128" y="442" font-size="12" fill="#7a8494" font-style="italic">Data objects, hero types, utility classes</text>
-  <rect x="128" y="450" width="52" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
-  <text x="154" y="461" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">HeroDTO</text>
-  <rect x="186" y="450" width="62" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
-  <text x="217" y="461" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">HeroTypes</text>
-  <rect x="254" y="450" width="86" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
-  <text x="297" y="461" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">GameConfigDTO</text>
-  <rect x="346" y="450" width="138" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
-  <text x="415" y="461" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">RecruitmentManager&lt;T&gt;</text>
+  <line x1="670" y1="244" x2="705" y2="244" stroke="url(#gold)" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="688" y="233" text-anchor="middle" font-size="10" fill="#93a0b3">references</text>
 
-  <!-- Arrow 4 -->
-  <line x1="300" y1="472" x2="300" y2="494" stroke="url(#arrow-grad)" stroke-width="1.5"/>
-  <polygon points="295,492 305,492 300,500" fill="#c9a84c" opacity="0.7"/>
-  <text x="315" y="488" font-size="9" fill="#7a8494" font-style="italic" letter-spacing="1">wraps</text>
+  <line x1="512" y1="314" x2="512" y2="336" stroke="url(#gold)" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="530" y="329" font-size="10" fill="#93a0b3">orchestrates</text>
 
-  <!-- ── LAYER 5: DI Infrastructure ── -->
-  <rect x="60" y="502" width="480" height="72" rx="4" fill="url(#normal-grad)" stroke="#3a3f4b" stroke-width="1"/>
-  <polyline points="60,512 60,502 70,502" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
-  <polyline points="530,566 540,566 540,556" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.4"/>
-  <rect x="72" y="514" width="44" height="44" rx="3" fill="#1a1c22" opacity="0.6"/>
-  <text x="94" y="542" text-anchor="middle" font-size="22">💉</text>
-  <text x="128" y="528" font-size="13" font-weight="700" letter-spacing="2" fill="#c9a84c">DI INFRASTRUCTURE</text>
-  <text x="128" y="544" font-size="12" fill="#7a8494" font-style="italic">Swappable dependency injection — Ninject-backed</text>
-  <rect x="128" y="552" width="68" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
-  <text x="162" y="563" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">IDIManager</text>
-  <rect x="202" y="552" width="64" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
-  <text x="234" y="563" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">DIManager</text>
-  <rect x="272" y="552" width="110" height="16" rx="2" fill="#1a1c22" stroke="#3a3f4b" stroke-width="0.8"/>
-  <text x="327" y="563" text-anchor="middle" font-size="9" fill="#f0e6c8" font-family="monospace">NinjectDIManager</text>
+  <line x1="512" y1="504" x2="512" y2="526" stroke="url(#gold)" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="530" y="519" font-size="10" fill="#93a0b3">uses</text>
 
-  <!-- Bottom rule -->
-  <line x1="60" y1="608" x2="255" y2="608" stroke="#c9a84c" stroke-width="0.5" opacity="0.25"/>
-  <rect x="296" y="604" width="8" height="8" fill="#c9a84c" transform="rotate(45 300 608)" opacity="0.4"/>
-  <line x1="345" y1="608" x2="540" y2="608" stroke="#c9a84c" stroke-width="0.5" opacity="0.25"/>
+  <line x1="670" y1="548" x2="690" y2="548" stroke="url(#gold)" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="680" y="537" text-anchor="middle" font-size="10" fill="#93a0b3">tested by</text>
+
+  <rect x="70" y="712" width="820" height="46" rx="8" fill="#131820" stroke="#354053"/>
+  <text x="90" y="739" font-size="12" fill="#d8dee9">Solution projects: </text>
+  <text x="186" y="739" font-size="12" fill="#f4d88d">ArenaConsoleApp</text>
+  <text x="296" y="739" font-size="12" fill="#d8dee9">→</text>
+  <text x="315" y="739" font-size="12" fill="#f4d88d">ArenaEngine</text>
+  <text x="411" y="739" font-size="12" fill="#d8dee9">→</text>
+  <text x="430" y="739" font-size="12" fill="#f4d88d">FW4di.Dotnet.Core</text>
+  <text x="585" y="739" font-size="12" fill="#d8dee9">|</text>
+  <text x="603" y="739" font-size="12" fill="#f4d88d">ArenaTest</text>
+  <text x="677" y="739" font-size="12" fill="#d8dee9">→ ArenaEngine</text>
 </svg>

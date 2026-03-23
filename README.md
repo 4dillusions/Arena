@@ -24,10 +24,14 @@ If the submodules have been updated and you want to fetch the latest changes:<br
 git submodule update --remote --merge
 ```
 
-Architecture
---------------
+Architecture and flow
+---------------------
 <p align="center">
   <img src="Doc/architecture.svg">
+</p>
+
+<p align="center">
+  <img src="Doc/flow.svg">
 </p>
 
 Build
@@ -37,7 +41,7 @@ Open ArenaProject.sln and build solution
 Run (example)
 ------
 ```bash
-cd Arena\ArenaProject\ArenaConsoleApp\bin\Debug\net8.0
+cd Arena\ArenaProject\ArenaConsoleApp\bin\Debug\net10.0
 ArenaConsoleApp.exe 4
 ```
 
