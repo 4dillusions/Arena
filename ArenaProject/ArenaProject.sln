@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArenaTest", "ArenaTest\Aren
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArenaConsoleApp", "ArenaConsoleApp\ArenaConsoleApp.csproj", "{2DD1D6B0-9856-4DE4-BC94-1B54657C2E56}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FirstParty", "FirstParty", "{9004C390-8557-4CCB-83EF-02D3C1232EFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FW4di.Dotnet.Core", "FirstParty\FW4di.Dotnet.Core\Project\FW4di.Dotnet.Core\FW4di.Dotnet.Core.csproj", "{D37EE4E0-3443-45F6-8567-04E2EADE43BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,11 +31,18 @@ Global
 		{2DD1D6B0-9856-4DE4-BC94-1B54657C2E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DD1D6B0-9856-4DE4-BC94-1B54657C2E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DD1D6B0-9856-4DE4-BC94-1B54657C2E56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D37EE4E0-3443-45F6-8567-04E2EADE43BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D37EE4E0-3443-45F6-8567-04E2EADE43BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D37EE4E0-3443-45F6-8567-04E2EADE43BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D37EE4E0-3443-45F6-8567-04E2EADE43BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E9F47A0-02E3-4BA8-8353-469D94212681}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D37EE4E0-3443-45F6-8567-04E2EADE43BD} = {9004C390-8557-4CCB-83EF-02D3C1232EFA}
 	EndGlobalSection
 EndGlobal

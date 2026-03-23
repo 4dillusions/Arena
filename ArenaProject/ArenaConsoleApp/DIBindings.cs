@@ -2,7 +2,7 @@
 using ArenaEngine.Controller;
 using ArenaEngine.Core;
 using ArenaEngine.Service;
-using ArenaEngine.ThirdParty.DependecyInjection;
+using FW4di.Dotnet.Core.DependencyInjection;
 
 namespace ArenaConsoleApp;
 

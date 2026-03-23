@@ -1,4 +1,4 @@
-﻿using ArenaEngine.ThirdParty.DependecyInjection;
+﻿using FW4di.Dotnet.Core.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ArenaTest.ThirdParty.DependecyInjection;

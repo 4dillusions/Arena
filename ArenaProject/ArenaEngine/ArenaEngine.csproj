@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ninject" Version="3.3.6" />
+    <ProjectReference Include="..\FirstParty\FW4di.Dotnet.Core\Project\FW4di.Dotnet.Core\FW4di.Dotnet.Core.csproj" />
   </ItemGroup>
 
 </Project>

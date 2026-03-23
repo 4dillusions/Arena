@@ -1,4 +1,4 @@
-﻿using ArenaEngine.ThirdParty.DependecyInjection;
+﻿using FW4di.Dotnet.Core.DependencyInjection;
 
 namespace ArenaConsoleApp.View;
 
