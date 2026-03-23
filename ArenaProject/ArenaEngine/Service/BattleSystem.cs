@@ -102,46 +102,22 @@ public class BattleSystem : IBattleSystem
 
     public void PlayBattle(HeroDTO attacker, HeroDTO defender)
     {
-        void DecrementPowerAfterBattle()
-        {
-            attacker.Power /= 2;
-            defender.Power /= 2;
-
-            ValidateHero(attacker);
-            ValidateHero(defender);
-        }
-
-        //if knight rider is defending
         if (defender.HeroType == HeroTypes.KnightRider)
         {
-            switch (attacker.HeroType)
-            {
-                case HeroTypes.KnightRider: defender.Power = 0; break; //knight rider attacks to other knight rider -> defender die
-                case HeroTypes.Swordsman: /* nothing happens */ break; //swordsman attacks to knight rider
-                case HeroTypes.Bowman: defender.Power = randomProvider.Next(1, 10) <= 6 ? defender.Power : 0;  break; //bowman attacks to knight rider -> knight rider dies 40%, lives 60%
-
-                default: throw new ArgumentOutOfRangeException();
-            }
-
-            DecrementPowerAfterBattle();
-
+            ResolveKnightRiderDefense(attacker, defender);
+            ApplyPostBattlePowerLoss(attacker, defender);
             return;
         }
 
-        //if swordsman or bowman is defending they die
-        //except, knight rider is attacking to swordsman than knight rider dies
         if (attacker.HeroType == HeroTypes.KnightRider && defender.HeroType == HeroTypes.Swordsman)
         {
-            attacker.Power = 0;
-            DecrementPowerAfterBattle();
-
+            ResolveKnightRiderIntoSwordsman(attacker, defender);
+            ApplyPostBattlePowerLoss(attacker, defender);
             return;
         }
 
-        if (defender.HeroType == HeroTypes.Swordsman || defender.HeroType == HeroTypes.Bowman)
-            defender.Power = 0;
-
-        DecrementPowerAfterBattle();
+        ResolveStandardDefense(defender);
+        ApplyPostBattlePowerLoss(attacker, defender);
     }
 
     public void GoBackHeroesAfterBattle(List<HeroDTO> battleHeroes, List<HeroDTO> heroList)
@@ -167,5 +143,47 @@ public class BattleSystem : IBattleSystem
             HeroTypes.Bowman => gameConfig.BowmanMaxPower,
             _ => throw new ArgumentOutOfRangeException(nameof(heroType), heroType, null)
         };
+    }
+
+    private void ResolveKnightRiderDefense(HeroDTO attacker, HeroDTO defender)
+    {
+        switch (attacker.HeroType)
+        {
+            case HeroTypes.KnightRider:
+                defender.Power = 0;
+                break;
+            case HeroTypes.Swordsman:
+                break;
+            case HeroTypes.Bowman:
+                defender.Power = BowmanLeavesKnightRiderAlive() ? defender.Power : 0;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(attacker.HeroType), attacker.HeroType, null);
+        }
+    }
+
+    private void ResolveKnightRiderIntoSwordsman(HeroDTO attacker, HeroDTO defender)
+    {
+        attacker.Power = 0;
+    }
+
+    private void ResolveStandardDefense(HeroDTO defender)
+    {
+        if (defender.HeroType == HeroTypes.Swordsman || defender.HeroType == HeroTypes.Bowman)
+            defender.Power = 0;
+    }
+
+    private bool BowmanLeavesKnightRiderAlive()
+    {
+        return randomProvider.Next(1, 10) <= 6;
+    }
+
+    private void ApplyPostBattlePowerLoss(HeroDTO attacker, HeroDTO defender)
+    {
+        attacker.Power /= 2;
+        defender.Power /= 2;
+
+        ValidateHero(attacker);
+        ValidateHero(defender);
     }
 }
