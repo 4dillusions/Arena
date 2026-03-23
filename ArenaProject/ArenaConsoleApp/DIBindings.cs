@@ -16,6 +16,7 @@ public static class DIBindings
             {
                 ViewLocator.Init(di);
 
+                di.Bind<IArenaLogFormatter, ArenaLogFormatter>(DILifetimeScopes.Singleton);
                 di.Bind<IRandomProvider, SystemRandomProvider>(DILifetimeScopes.Singleton);
                 di.Bind<IBattleSystem, BattleSystem>(DILifetimeScopes.Singleton);
                 di.Bind<GameConfigDTO, GameConfigDTO>(DILifetimeScopes.Singleton);

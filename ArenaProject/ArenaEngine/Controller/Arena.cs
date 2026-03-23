@@ -14,15 +14,17 @@ namespace ArenaEngine.Controller;
 public class Arena
 {
     private readonly IBattleSystem battleSystem;
+    private readonly IArenaLogFormatter logFormatter;
     private readonly List<HeroDTO> heroList = [];
 
     public uint ArenaHeroesCount { get; set; } = 1000;
 
     public event EventHandler<Tuple<string, ConsoleColor>>? OnLogMessage;
 
-    public Arena(IBattleSystem battleSystem)
+    public Arena(IBattleSystem battleSystem, IArenaLogFormatter logFormatter)
     {
         this.battleSystem = battleSystem;
+        this.logFormatter = logFormatter;
     }
 
     public bool Init()
@@ -69,7 +71,7 @@ public class Arena
         if (heroList.Count == 1)
         {
             var winner = heroList.First();
-            WriteLog("Winner: " + FormatHero(winner, "Laurel wreath"), ConsoleColor.Cyan);
+            WriteLog("Winner: " + logFormatter.FormatHero(winner, "Laurel wreath"), ConsoleColor.Cyan);
         }
         else
             WriteLog("Nobody survived the game!");
@@ -120,11 +122,6 @@ public class Arena
         );
     }
 
-    private static string FormatHero(HeroDTO hero, string role)
-    {
-        return $"{hero.Id}. {hero.HeroType} hero, power: {hero.Power} [{(hero.IsAlive ? "live" : "died")}] - {role}";
-    }
-
     private void WriteLog(string message, ConsoleColor color = ConsoleColor.Yellow)
     {
         OnLogMessage?.Invoke(this, Tuple.Create(message, color));
@@ -135,6 +132,6 @@ public class Arena
         WriteLog(title);
 
         foreach (var (hero, role) in heroes)
-            WriteLog(FormatHero(hero, role), hero.IsAlive ? ConsoleColor.Green : ConsoleColor.Red);
+            WriteLog(logFormatter.FormatHero(hero, role), hero.IsAlive ? ConsoleColor.Green : ConsoleColor.Red);
     }
 }
