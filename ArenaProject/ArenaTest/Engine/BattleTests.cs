@@ -53,15 +53,21 @@ public class BattleTests
         IBattleSystem battleSystem = new BattleSystem(new GameConfigDTO());
         var heroList = new List<HeroDTO>();
 
-        Assert.IsTrue(battleSystem.SelectHeroesForBattle(heroList).Count == 0);
+        var emptySelection = battleSystem.SelectHeroesForBattle(heroList);
+        Assert.AreEqual(0, emptySelection.BattleHeroes.Count);
+        Assert.AreEqual(0, emptySelection.RemainingHeroes.Count);
 
         heroList = battleSystem.CreateRandomHeroList(2);
-        Assert.IsTrue(battleSystem.SelectHeroesForBattle(heroList).Count == 2);
-        Assert.IsTrue(heroList?.Count == 0);
+        var fullSelection = battleSystem.SelectHeroesForBattle(heroList);
+        Assert.AreEqual(2, fullSelection.BattleHeroes.Count);
+        Assert.AreEqual(0, fullSelection.RemainingHeroes.Count);
+        Assert.AreEqual(2, heroList.Count);
 
         heroList = battleSystem.CreateRandomHeroList(3);
-        Assert.IsTrue(battleSystem.SelectHeroesForBattle(heroList).Count == 2);
-        Assert.IsTrue(heroList?.Count == 1);
+        var partialSelection = battleSystem.SelectHeroesForBattle(heroList);
+        Assert.AreEqual(2, partialSelection.BattleHeroes.Count);
+        Assert.AreEqual(1, partialSelection.RemainingHeroes.Count);
+        Assert.AreEqual(3, heroList.Count);
     }
 
     [TestMethod]
@@ -76,11 +82,12 @@ public class BattleTests
             new() { Id = 3, HeroType = HeroTypes.Bowman, Power = 100 }
         ];
 
-        var battleHeroes = battleSystem.SelectHeroesForBattle(heroList);
+        var selection = battleSystem.SelectHeroesForBattle(heroList);
 
-        CollectionAssert.AreEqual(new[] { 3u, 1u }, battleHeroes.Select(hero => hero.Id).ToArray());
+        CollectionAssert.AreEqual(new[] { 3u, 1u }, selection.BattleHeroes.Select(hero => hero.Id).ToArray());
         CollectionAssert.AreEqual(new[] { 3, 2 }, randomProvider.MaxValueCalls);
-        CollectionAssert.AreEqual(new[] { 2u }, heroList.Select(hero => hero.Id).ToArray());
+        CollectionAssert.AreEqual(new[] { 2u }, selection.RemainingHeroes.Select(hero => hero.Id).ToArray());
+        CollectionAssert.AreEqual(new[] { 1u, 2u, 3u }, heroList.Select(hero => hero.Id).ToArray());
     }
 
     /// <summary>
@@ -289,28 +296,26 @@ public class BattleTests
         var heroList = new List<HeroDTO>();
         var knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
         var swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
-        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, heroList);
-        Assert.IsTrue(heroList?.Count == 2);
+        heroList = battleSystem.GetSurvivingHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman });
+        Assert.IsTrue(heroList.Count == 2);
         Assert.IsTrue(heroList[0].Power == gameConfig.KnightRiderMaxPower); //maximum power
         Assert.IsTrue(heroList[1].Power == gameConfig.SwordsmanMaxPower); //maximum power
 
         //after go back, power remains unchanged when it is already below maximum
-        heroList = new List<HeroDTO>();
         knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
         swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
         knightRider.Power = 100;
         swordsman.Power = 80;
-        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, heroList);
+        heroList = battleSystem.GetSurvivingHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman });
         Assert.IsTrue(knightRider.Power == 100); //high power is same after go back
         Assert.IsTrue(swordsman.Power == 80); //high power is same after go back
 
         //after go back, low power hero died and didn't go back
-        heroList = new List<HeroDTO>();
         knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
         swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
         knightRider.Power = 10;
-        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, heroList);
-        Assert.IsTrue(heroList?.Count == 1); //one hero went back
+        heroList = battleSystem.GetSurvivingHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman });
+        Assert.IsTrue(heroList.Count == 1); //one hero went back
         Assert.IsTrue(heroList[0].Id == swordsman.Id); //high power hero is alive and go back
         Assert.IsTrue(swordsman.Power == gameConfig.SwordsmanMaxPower); //and it keeps the same maximum power
         Assert.IsTrue(knightRider.Power == 10 && knightRider.IsAlive == false); //low power hero died

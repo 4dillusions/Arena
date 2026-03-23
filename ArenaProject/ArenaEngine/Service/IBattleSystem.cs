@@ -19,8 +19,8 @@ public interface IBattleSystem
     /// <summary>Clamps hero power to the allowed maximum and updates their alive state.</summary>
     void ValidateHero(HeroDTO hero);
 
-    /// <summary> take out heroes from heroList and add them in return list </summary>
-    List<HeroDTO> SelectHeroesForBattle(List<HeroDTO> heroList);
+    /// <summary>Selects two heroes for battle and returns the remaining arena heroes separately.</summary>
+    BattleSelectionResult SelectHeroesForBattle(IReadOnlyList<HeroDTO> heroList);
 
     /// <summary>
     /// rest all heroes in list
@@ -33,8 +33,7 @@ public interface IBattleSystem
     /// </summary>
     void PlayBattle(HeroDTO attacker, HeroDTO defender);
 
-    /// <summary>Returns surviving heroes to the arena after battle.</summary>
+    /// <summary>Collects surviving heroes after battle.</summary>
     /// <param name="battleHeroes">The two heroes that fought in battle.</param>
-    /// <param name="heroList">The list of heroes currently in the arena.</param>
-    void GoBackHeroesAfterBattle(List<HeroDTO> battleHeroes, List<HeroDTO> heroList);
+    List<HeroDTO> GetSurvivingHeroesAfterBattle(List<HeroDTO> battleHeroes);
 }

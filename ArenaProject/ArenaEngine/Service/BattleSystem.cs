@@ -74,21 +74,32 @@ public class BattleSystem : IBattleSystem
             hero.IsAlive = false;
     }
 
-    public List<HeroDTO> SelectHeroesForBattle(List<HeroDTO> heroList)
+    public BattleSelectionResult SelectHeroesForBattle(IReadOnlyList<HeroDTO> heroList)
     {
-        var result = new List<HeroDTO>();
-
         if (heroList.Count < 2)
-            return result;
+        {
+            return new BattleSelectionResult
+            {
+                BattleHeroes = [],
+                RemainingHeroes = heroList.ToList()
+            };
+        }
+
+        var remainingHeroes = heroList.ToList();
+        var battleHeroes = new List<HeroDTO>();
 
         for (int i = 0; i < 2; i++)
         {
-            var heroRandIndex = randomProvider.Next(heroList.Count);
-            result.Add(heroList[heroRandIndex]);
-            heroList.RemoveAt(heroRandIndex);
+            var heroRandIndex = randomProvider.Next(remainingHeroes.Count);
+            battleHeroes.Add(remainingHeroes[heroRandIndex]);
+            remainingHeroes.RemoveAt(heroRandIndex);
         }
-            
-        return result;
+
+        return new BattleSelectionResult
+        {
+            BattleHeroes = battleHeroes,
+            RemainingHeroes = remainingHeroes
+        };
     }
 
     public void RestHeroes(List<HeroDTO> heroList)
@@ -120,8 +131,10 @@ public class BattleSystem : IBattleSystem
         ApplyPostBattlePowerLoss(attacker, defender);
     }
 
-    public void GoBackHeroesAfterBattle(List<HeroDTO> battleHeroes, List<HeroDTO> heroList)
+    public List<HeroDTO> GetSurvivingHeroesAfterBattle(List<HeroDTO> battleHeroes)
     {
+        var survivingHeroes = new List<HeroDTO>();
+
         foreach (var hero in battleHeroes)
         {
             ValidateHero(hero);
@@ -129,9 +142,11 @@ public class BattleSystem : IBattleSystem
             if (hero.IsAlive)
             {
                 ValidateHero(hero); //maximize power
-                heroList.Add(hero);
+                survivingHeroes.Add(hero);
             }
         }
+
+        return survivingHeroes;
     }
 
     private short GetMaxPower(HeroTypes heroType)

@@ -82,22 +82,26 @@ public class Arena
         WriteLog($"\n{roundCounter}. turn");
         WriteLog("Number of heroes in arena: " + heroList.Count);
 
-        var battleHeroes = battleSystem.SelectHeroesForBattle(heroList);
-        if (battleHeroes.Count != 2)
+        var selection = battleSystem.SelectHeroesForBattle(heroList);
+        if (selection.BattleHeroes.Count != 2)
         {
             WriteLog("Unable to select two heroes for battle!", ConsoleColor.Red);
             return null;
         }
 
-        battleSystem.RestHeroes(heroList);
-        battleSystem.PlayBattle(battleHeroes[0], battleHeroes[1]);
-        battleSystem.GoBackHeroesAfterBattle(battleHeroes, heroList);
+        battleSystem.RestHeroes(selection.RemainingHeroes);
+        battleSystem.PlayBattle(selection.BattleHeroes[0], selection.BattleHeroes[1]);
+        var survivingHeroes = battleSystem.GetSurvivingHeroesAfterBattle(selection.BattleHeroes);
+
+        heroList.Clear();
+        heroList.AddRange(selection.RemainingHeroes);
+        heroList.AddRange(survivingHeroes);
 
         return new ArenaRoundResult
         {
             RoundNumber = roundCounter,
-            Attacker = battleHeroes[0],
-            Defender = battleHeroes[1]
+            Attacker = selection.BattleHeroes[0],
+            Defender = selection.BattleHeroes[1]
         };
     }
 
