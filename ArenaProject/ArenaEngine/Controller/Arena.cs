@@ -14,9 +14,9 @@ namespace ArenaEngine.Controller;
 public class Arena
 {
     private readonly IBattleSystem battleSystem;
+    private readonly List<HeroDTO> heroList = [];
 
     public uint ArenaHeroesCount { get; set; } = 1000;
-    private List<HeroDTO>? heroList;
 
     public event EventHandler<Tuple<string, ConsoleColor>>? OnLogMessage;
 
@@ -35,7 +35,8 @@ public class Arena
 
         try
         {
-            heroList = battleSystem.CreateRandomHeroList(ArenaHeroesCount);
+            heroList.Clear();
+            heroList.AddRange(battleSystem.CreateRandomHeroList(ArenaHeroesCount));
         }
         catch (ArgumentOutOfRangeException)
         {
@@ -54,7 +55,7 @@ public class Arena
         WriteLog("Game started.");
 
         int roundCounter = 1;
-        while (heroList is {Count: > 1})
+        while (heroList.Count > 1)
         {
             if (!RunRound(roundCounter++))
                 break;
@@ -62,7 +63,7 @@ public class Arena
 
         WriteLog("\nGame over!");
 
-        if (heroList is {Count: 1})
+        if (heroList.Count == 1)
         {
             var winner = heroList.First();
             winner.Description = "Laurel wreath";
@@ -74,13 +75,10 @@ public class Arena
 
     private bool RunRound(int roundCounter)
     {
-        if (heroList == null)
-            return false;
-
         WriteLog("\n" + roundCounter + ". turns");
         WriteLog("Number of heroes in arena: " + heroList.Count);
 
-        var battleHeroes = battleSystem.SelectHeroesForBattle(ref heroList);
+        var battleHeroes = battleSystem.SelectHeroesForBattle(heroList);
         if (battleHeroes.Count != 2)
         {
             WriteLog("Unable to select two heroes for battle!", ConsoleColor.Red);
@@ -91,10 +89,10 @@ public class Arena
         battleHeroes[1].Description = "defender";
         WriteHeroesStatsLog("Selected heroes for battle:", battleHeroes);
 
-        battleSystem.RestHeroes(ref heroList);
+        battleSystem.RestHeroes(heroList);
         battleSystem.PlayBattle(battleHeroes[0], battleHeroes[1]);
         WriteHeroesStatsLog("Heroes state after the battle:", battleHeroes);
-        battleSystem.GoBackHeroesAfterBattle(battleHeroes, ref heroList);
+        battleSystem.GoBackHeroesAfterBattle(battleHeroes, heroList);
 
         return true;
     }

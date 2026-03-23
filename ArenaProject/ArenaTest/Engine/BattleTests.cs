@@ -53,14 +53,14 @@ public class BattleTests
         IBattleSystem battleSystem = new BattleSystem(new GameConfigDTO());
         var heroList = new List<HeroDTO>();
 
-        Assert.IsTrue(battleSystem.SelectHeroesForBattle(ref heroList).Count == 0);
+        Assert.IsTrue(battleSystem.SelectHeroesForBattle(heroList).Count == 0);
 
         heroList = battleSystem.CreateRandomHeroList(2);
-        Assert.IsTrue(battleSystem.SelectHeroesForBattle(ref heroList).Count == 2);
+        Assert.IsTrue(battleSystem.SelectHeroesForBattle(heroList).Count == 2);
         Assert.IsTrue(heroList?.Count == 0);
 
         heroList = battleSystem.CreateRandomHeroList(3);
-        Assert.IsTrue(battleSystem.SelectHeroesForBattle(ref heroList).Count == 2);
+        Assert.IsTrue(battleSystem.SelectHeroesForBattle(heroList).Count == 2);
         Assert.IsTrue(heroList?.Count == 1);
     }
 
@@ -69,18 +69,18 @@ public class BattleTests
     {
         var randomProvider = new FakeRandomProvider(2, 0);
         IBattleSystem battleSystem = new BattleSystem(new GameConfigDTO(), randomProvider);
-        List<HeroDTO>? heroList =
+        List<HeroDTO> heroList =
         [
             new() { Id = 1, HeroType = HeroTypes.KnightRider, Power = 150 },
             new() { Id = 2, HeroType = HeroTypes.Swordsman, Power = 120 },
             new() { Id = 3, HeroType = HeroTypes.Bowman, Power = 100 }
         ];
 
-        var battleHeroes = battleSystem.SelectHeroesForBattle(ref heroList);
+        var battleHeroes = battleSystem.SelectHeroesForBattle(heroList);
 
         CollectionAssert.AreEqual(new[] { 3u, 1u }, battleHeroes.Select(hero => hero.Id).ToArray());
         CollectionAssert.AreEqual(new[] { 3, 2 }, randomProvider.MaxValueCalls);
-        CollectionAssert.AreEqual(new[] { 2u }, heroList!.Select(hero => hero.Id).ToArray());
+        CollectionAssert.AreEqual(new[] { 2u }, heroList.Select(hero => hero.Id).ToArray());
     }
 
     /// <summary>
@@ -155,7 +155,7 @@ public class BattleTests
         };
 
         heroList[0].Power = 90; //KnightRider
-        battleSystem.RestHeroes(ref heroList);
+        battleSystem.RestHeroes(heroList);
         
         Assert.IsTrue(heroList?.Count == 2);
         Assert.IsTrue(heroList[0].Power == 90 + gameConfig.RestPowerIncrement); //increased current power
@@ -289,7 +289,7 @@ public class BattleTests
         var heroList = new List<HeroDTO>();
         var knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
         var swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
-        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, ref heroList);
+        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, heroList);
         Assert.IsTrue(heroList?.Count == 2);
         Assert.IsTrue(heroList[0].Power == gameConfig.KnightRiderMaxPower); //maximum power
         Assert.IsTrue(heroList[1].Power == gameConfig.SwordsmanMaxPower); //maximum power
@@ -300,7 +300,7 @@ public class BattleTests
         swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
         knightRider.Power = 100;
         swordsman.Power = 80;
-        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, ref heroList);
+        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, heroList);
         Assert.IsTrue(knightRider.Power == 100); //high power is same after go back
         Assert.IsTrue(swordsman.Power == 80); //high power is same after go back
 
@@ -309,7 +309,7 @@ public class BattleTests
         knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
         swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
         knightRider.Power = 10;
-        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, ref heroList);
+        battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, heroList);
         Assert.IsTrue(heroList?.Count == 1); //one hero went back
         Assert.IsTrue(heroList[0].Id == swordsman.Id); //high power hero is alive and go back
         Assert.IsTrue(swordsman.Power == gameConfig.SwordsmanMaxPower); //and he hes same maximum power

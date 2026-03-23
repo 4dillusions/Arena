@@ -74,11 +74,11 @@ public class BattleSystem : IBattleSystem
             hero.IsAlive = false;
     }
 
-    public List<HeroDTO> SelectHeroesForBattle(ref List<HeroDTO>? heroList)
+    public List<HeroDTO> SelectHeroesForBattle(List<HeroDTO> heroList)
     {
         var result = new List<HeroDTO>();
 
-        if (heroList is null || heroList.Count < 2)
+        if (heroList.Count < 2)
             return result;
 
         for (int i = 0; i < 2; i++)
@@ -91,14 +91,13 @@ public class BattleSystem : IBattleSystem
         return result;
     }
 
-    public void RestHeroes(ref List<HeroDTO>? heroList)
+    public void RestHeroes(List<HeroDTO> heroList)
     {
-        if (heroList != null)
-            foreach (var hero in heroList)
-            {
-                hero.Power += gameConfig.RestPowerIncrement; //rest time, increase power
-                ValidateHero(hero); //maximize power
-            }
+        foreach (var hero in heroList)
+        {
+            hero.Power += gameConfig.RestPowerIncrement; //rest time, increase power
+            ValidateHero(hero); //maximize power
+        }
     }
 
     public void PlayBattle(HeroDTO attacker, HeroDTO defender)
@@ -145,7 +144,7 @@ public class BattleSystem : IBattleSystem
         DecrementPowerAfterBattle();
     }
 
-    public void GoBackHeroesAfterBattle(List<HeroDTO> battleHeroes, ref List<HeroDTO>? heroList)
+    public void GoBackHeroesAfterBattle(List<HeroDTO> battleHeroes, List<HeroDTO> heroList)
     {
         foreach (var hero in battleHeroes)
         {
@@ -154,7 +153,7 @@ public class BattleSystem : IBattleSystem
             if (hero.IsAlive)
             {
                 ValidateHero(hero); //maximize power
-                heroList?.Add(hero);
+                heroList.Add(hero);
             }
         }
     }
