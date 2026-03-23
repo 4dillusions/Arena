@@ -51,33 +51,14 @@ public class Arena
         if (!Init())
             return;
 
-        WriteLog( "Game started.");
+        WriteLog("Game started.");
 
         int roundCounter = 1;
-        do //turns
+        while (heroList is {Count: > 1})
         {
-            WriteLog("\n" + roundCounter++ + ". turns");
-            if (heroList != null)
-            {
-                WriteLog("Number of heroes in arena: " + heroList.Count);
-
-                //Select 2 heroes for battle
-                var battleHeroes = battleSystem.SelectHeroesForBattle(ref heroList);
-                battleHeroes[0].Description = "attacker";
-                battleHeroes[1].Description = "defender";
-                WriteHeroesStatsLog("Selected heroes for battle:", battleHeroes);
-
-                //other heroes are resting
-                battleSystem.RestHeroes(ref heroList);
-
-                //play 1v1 battle
-                battleSystem.PlayBattle(battleHeroes[0], battleHeroes[1]);
-                WriteHeroesStatsLog("Heroes state after the battle:", battleHeroes);
-
-                //go back
-                battleSystem.GoBackHeroesAfterBattle(battleHeroes, ref heroList);
-            }
-        } while (heroList is {Count: > 1});
+            if (!RunRound(roundCounter++))
+                break;
+        }
 
         WriteLog("\nGame over!");
 
@@ -85,27 +66,54 @@ public class Arena
         {
             var winner = heroList.First();
             winner.Description = "Laurel wreath";
-            WriteLog("Winner: " + HeroToString(winner), ConsoleColor.Cyan);
+            WriteLog("Winner: " + FormatHero(winner), ConsoleColor.Cyan);
         }
         else
             WriteLog("Nobody survived the game!");
     }
 
-    string HeroToString(HeroDTO hero)
+    private bool RunRound(int roundCounter)
+    {
+        if (heroList == null)
+            return false;
+
+        WriteLog("\n" + roundCounter + ". turns");
+        WriteLog("Number of heroes in arena: " + heroList.Count);
+
+        var battleHeroes = battleSystem.SelectHeroesForBattle(ref heroList);
+        if (battleHeroes.Count != 2)
+        {
+            WriteLog("Unable to select two heroes for battle!", ConsoleColor.Red);
+            return false;
+        }
+
+        battleHeroes[0].Description = "attacker";
+        battleHeroes[1].Description = "defender";
+        WriteHeroesStatsLog("Selected heroes for battle:", battleHeroes);
+
+        battleSystem.RestHeroes(ref heroList);
+        battleSystem.PlayBattle(battleHeroes[0], battleHeroes[1]);
+        WriteHeroesStatsLog("Heroes state after the battle:", battleHeroes);
+        battleSystem.GoBackHeroesAfterBattle(battleHeroes, ref heroList);
+
+        return true;
+    }
+
+    private static string FormatHero(HeroDTO hero)
     {
         return $"{hero.Id}. {hero.HeroType} hero, power: {hero.Power} [{(hero.IsAlive ? "live" : "died")}] - {hero.Description}";
     }
 
-    void WriteLog(string message, ConsoleColor color = ConsoleColor.Yellow)
+    private void WriteLog(string message, ConsoleColor color = ConsoleColor.Yellow)
     {
         OnLogMessage?.Invoke(this, Tuple.Create(message, color));
     }
 
-    void WriteHeroesStatsLog(string title, List<HeroDTO> heroes)
+    private void WriteHeroesStatsLog(string title, List<HeroDTO> heroes)
     {
         WriteLog(title);
 
         foreach (var hero in heroes)
-            WriteLog(HeroToString(hero), hero.IsAlive ? ConsoleColor.Green : ConsoleColor.Red);
+            WriteLog(FormatHero(hero), hero.IsAlive ? ConsoleColor.Green : ConsoleColor.Red);
     }
 }

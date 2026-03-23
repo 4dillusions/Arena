@@ -13,10 +13,17 @@ namespace ArenaEngine.Service;
 public class BattleSystem : IBattleSystem
 {
     private readonly GameConfigDTO gameConfig;
+    private readonly IRandomProvider randomProvider;
 
     public BattleSystem(GameConfigDTO gameConfig)
+        : this(gameConfig, new SystemRandomProvider())
+    {
+    }
+
+    public BattleSystem(GameConfigDTO gameConfig, IRandomProvider randomProvider)
     {
         this.gameConfig = gameConfig;
+        this.randomProvider = randomProvider;
     }
 
     public List<HeroTypes> CreateRandomHeroTypeList(uint listSize)
@@ -32,17 +39,9 @@ public class BattleSystem : IBattleSystem
         var result = new HeroDTO
         {
             HeroType = heroType,
-            IsAlive = true
+            IsAlive = true,
+            Power = GetMaxPower(heroType)
         };
-
-        switch (heroType)
-        {
-            case HeroTypes.KnightRider: result.Power = gameConfig.KnightRiderMaxPower; break;
-            case HeroTypes.Swordsman: result.Power = gameConfig.SwordsmanMaxPower; break;
-            case HeroTypes.Bowman: result.Power = gameConfig.BowmanMaxPower; break;
-
-            default: throw new ArgumentOutOfRangeException(nameof(heroType), heroType, null);
-        }
 
         return result;
     }
@@ -64,16 +63,7 @@ public class BattleSystem : IBattleSystem
 
     public void ValidateHero(HeroDTO hero)
     {
-        short maxPower;
-
-        switch (hero.HeroType)
-        {
-            case HeroTypes.KnightRider: maxPower = gameConfig.KnightRiderMaxPower; break;
-            case HeroTypes.Swordsman: maxPower = gameConfig.SwordsmanMaxPower; break;
-            case HeroTypes.Bowman: maxPower = gameConfig.BowmanMaxPower; break;
-
-            default: throw new ArgumentOutOfRangeException();
-        }
+        var maxPower = GetMaxPower(hero.HeroType);
 
         //maximize the power
         if (hero.Power > maxPower)
@@ -87,19 +77,15 @@ public class BattleSystem : IBattleSystem
     public List<HeroDTO> SelectHeroesForBattle(ref List<HeroDTO>? heroList)
     {
         var result = new List<HeroDTO>();
-        var random = new Random();
 
-        if (heroList is {Count: < 2})
+        if (heroList is null || heroList.Count < 2)
             return result;
 
         for (int i = 0; i < 2; i++)
         {
-            if (heroList != null)
-            {
-                var heroRandIndex = random.Next(heroList.Count - 1);
-                result.Add(heroList[heroRandIndex]);
-                heroList.RemoveAt(heroRandIndex);
-            }
+            var heroRandIndex = randomProvider.Next(heroList.Count);
+            result.Add(heroList[heroRandIndex]);
+            heroList.RemoveAt(heroRandIndex);
         }
             
         return result;
@@ -133,7 +119,7 @@ public class BattleSystem : IBattleSystem
             {
                 case HeroTypes.KnightRider: defender.Power = 0; break; //knight rider attacks to other knight rider -> defender die
                 case HeroTypes.Swordsman: /* nothing happens */ break; //swordsman attacks to knight rider
-                case HeroTypes.Bowman: defender.Power = new Random().Next(1, 10) <= 6 ? defender.Power : 0;  break; //bowman attacks to knight rider -> knight rider dies 40%, lives 60%
+                case HeroTypes.Bowman: defender.Power = randomProvider.Next(1, 10) <= 6 ? defender.Power : 0;  break; //bowman attacks to knight rider -> knight rider dies 40%, lives 60%
 
                 default: throw new ArgumentOutOfRangeException();
             }
@@ -171,5 +157,16 @@ public class BattleSystem : IBattleSystem
                 heroList?.Add(hero);
             }
         }
+    }
+
+    private short GetMaxPower(HeroTypes heroType)
+    {
+        return heroType switch
+        {
+            HeroTypes.KnightRider => gameConfig.KnightRiderMaxPower,
+            HeroTypes.Swordsman => gameConfig.SwordsmanMaxPower,
+            HeroTypes.Bowman => gameConfig.BowmanMaxPower,
+            _ => throw new ArgumentOutOfRangeException(nameof(heroType), heroType, null)
+        };
     }
 }

@@ -2,13 +2,48 @@
 using ArenaEngine.Model;
 using ArenaEngine.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.Metrics;
 
 namespace ArenaTest.Engine;
 
 [TestClass]
 public class BattleTests
 {
+    private sealed class FakeRandomProvider : IRandomProvider
+    {
+        private readonly Queue<int> values;
+
+        public FakeRandomProvider(params int[] values)
+        {
+            this.values = new Queue<int>(values);
+        }
+
+        public List<int> MaxValueCalls { get; } = new();
+
+        public int Next(int maxValue)
+        {
+            MaxValueCalls.Add(maxValue);
+
+            if (!values.TryDequeue(out var value))
+                throw new AssertFailedException("No random values left for Next(maxValue).");
+
+            if (value < 0 || value >= maxValue)
+                throw new AssertFailedException($"Random value {value} is out of range for maxValue {maxValue}.");
+
+            return value;
+        }
+
+        public int Next(int minValue, int maxValue)
+        {
+            if (!values.TryDequeue(out var value))
+                throw new AssertFailedException("No random values left for Next(minValue, maxValue).");
+
+            if (value < minValue || value >= maxValue)
+                throw new AssertFailedException($"Random value {value} is out of range for interval [{minValue}, {maxValue}).");
+
+            return value;
+        }
+    }
+
     /// <summary>
     /// Select 2 heroes from arena (if it possible) for battle
     /// </summary>
@@ -27,6 +62,25 @@ public class BattleTests
         heroList = battleSystem.CreateRandomHeroList(3);
         Assert.IsTrue(battleSystem.SelectHeroesForBattle(ref heroList).Count == 2);
         Assert.IsTrue(heroList?.Count == 1);
+    }
+
+    [TestMethod]
+    public void SelectHeroesForBattleUsesFullListRange()
+    {
+        var randomProvider = new FakeRandomProvider(2, 0);
+        IBattleSystem battleSystem = new BattleSystem(new GameConfigDTO(), randomProvider);
+        List<HeroDTO>? heroList =
+        [
+            new() { Id = 1, HeroType = HeroTypes.KnightRider, Power = 150 },
+            new() { Id = 2, HeroType = HeroTypes.Swordsman, Power = 120 },
+            new() { Id = 3, HeroType = HeroTypes.Bowman, Power = 100 }
+        ];
+
+        var battleHeroes = battleSystem.SelectHeroesForBattle(ref heroList);
+
+        CollectionAssert.AreEqual(new[] { 3u, 1u }, battleHeroes.Select(hero => hero.Id).ToArray());
+        CollectionAssert.AreEqual(new[] { 3, 2 }, randomProvider.MaxValueCalls);
+        CollectionAssert.AreEqual(new[] { 2u }, heroList!.Select(hero => hero.Id).ToArray());
     }
 
     /// <summary>
@@ -180,6 +234,31 @@ public class BattleTests
         //bowman (defense): dies
         RecreateHeroesAndPlayBattle(battleSystem, ref knightRiderAttacker, ref bowmanDefender);
         Assert.IsTrue(knightRiderAttacker.Power > 0 && bowmanDefender.Power == 0);
+    }
+
+    [TestMethod]
+    public void PlayBattleBowmanAgainstKnightRiderCanBeDeterministic()
+    {
+        var defenderLives = new BattleSystem(new GameConfigDTO(), new FakeRandomProvider(6));
+        var livingBowman = defenderLives.CreateHero(HeroTypes.Bowman);
+        var livingKnightRider = defenderLives.CreateHero(HeroTypes.KnightRider);
+
+        defenderLives.PlayBattle(livingBowman, livingKnightRider);
+
+        Assert.IsTrue(livingBowman.IsAlive);
+        Assert.IsTrue(livingKnightRider.IsAlive);
+        Assert.IsTrue(livingBowman.Power > 0);
+        Assert.IsTrue(livingKnightRider.Power > 0);
+
+        var defenderDies = new BattleSystem(new GameConfigDTO(), new FakeRandomProvider(7));
+        var lethalBowman = defenderDies.CreateHero(HeroTypes.Bowman);
+        var defeatedKnightRider = defenderDies.CreateHero(HeroTypes.KnightRider);
+
+        defenderDies.PlayBattle(lethalBowman, defeatedKnightRider);
+
+        Assert.IsTrue(lethalBowman.Power > 0);
+        Assert.AreEqual(0, defeatedKnightRider.Power);
+        Assert.IsFalse(defeatedKnightRider.IsAlive);
     }
 
     [TestMethod]
