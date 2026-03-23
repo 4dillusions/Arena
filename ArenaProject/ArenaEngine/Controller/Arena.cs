@@ -42,7 +42,7 @@ public class Arena
         }
         catch (ArgumentOutOfRangeException)
         {
-            WriteLog("The number of recommended heroes is greater than the maximum allowed!");
+            WriteLog("The specified number of heroes exceeds the configured maximum.");
             return false;
         }
 
@@ -79,7 +79,7 @@ public class Arena
 
     private ArenaRoundResult? RunRound(int roundCounter)
     {
-        WriteLog("\n" + roundCounter + ". turns");
+        WriteLog($"\n{roundCounter}. turn");
         WriteLog("Number of heroes in arena: " + heroList.Count);
 
         var battleHeroes = battleSystem.SelectHeroesForBattle(heroList);

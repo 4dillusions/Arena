@@ -9,14 +9,14 @@ public interface IBattleSystem
     /// Generate random list of heroes
     /// </summary>
     /// <param name="listSize"> size of this list </param>
-    /// <returns> returns list contains heroes </returns>
+    /// <returns> A list of generated hero types. </returns>
     List<HeroTypes> CreateRandomHeroTypeList(uint listSize);
 
     HeroDTO CreateHero(HeroTypes heroType);
 
     List<HeroDTO> CreateRandomHeroList(uint listSize);
 
-    /// <summary> maximize his power and change live state according to power </summary>
+    /// <summary>Clamps hero power to the allowed maximum and updates their alive state.</summary>
     void ValidateHero(HeroDTO hero);
 
     /// <summary> take out heroes from heroList and add them in return list </summary>
@@ -29,13 +29,12 @@ public interface IBattleSystem
     void RestHeroes(List<HeroDTO> heroList);
 
     /// <summary>
-    /// 1v1 battle, changing power and live state according to rules
-    /// decrease power because of battle
+    /// Resolves a 1v1 battle and applies post-battle power loss.
     /// </summary>
     void PlayBattle(HeroDTO attacker, HeroDTO defender);
 
-    /// <summary> Heroes go back afther the battle </summary>
-    /// <param name="battleHeroes"> two heroes in the battle </param>
-    /// <param name="heroList"> list of all other heroes </param>
+    /// <summary>Returns surviving heroes to the arena after battle.</summary>
+    /// <param name="battleHeroes">The two heroes that fought in battle.</param>
+    /// <param name="heroList">The list of heroes currently in the arena.</param>
     void GoBackHeroesAfterBattle(List<HeroDTO> battleHeroes, List<HeroDTO> heroList);
 }

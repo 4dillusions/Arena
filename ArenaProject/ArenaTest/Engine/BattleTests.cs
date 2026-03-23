@@ -96,7 +96,7 @@ public class BattleTests
         for (var i = 0; i < heroTypeCount; i++)
             heroes[i] = new HeroDTO {HeroType = (HeroTypes) i, Power = (i + 1) * 10};
 
-        //hero is alive afther born :)
+        //heroes are alive after creation
         Assert.IsTrue(heroes[(int) HeroTypes.KnightRider].IsAlive);
         Assert.IsTrue(heroes[(int) HeroTypes.Swordsman].IsAlive);
         Assert.IsTrue(heroes[(int) HeroTypes.Bowman].IsAlive);
@@ -294,7 +294,7 @@ public class BattleTests
         Assert.IsTrue(heroList[0].Power == gameConfig.KnightRiderMaxPower); //maximum power
         Assert.IsTrue(heroList[1].Power == gameConfig.SwordsmanMaxPower); //maximum power
 
-        //after go back same power (with lover power than maximum)
+        //after go back, power remains unchanged when it is already below maximum
         heroList = new List<HeroDTO>();
         knightRider = battleSystem.CreateHero(HeroTypes.KnightRider);
         swordsman = battleSystem.CreateHero(HeroTypes.Swordsman);
@@ -312,7 +312,7 @@ public class BattleTests
         battleSystem.GoBackHeroesAfterBattle(new List<HeroDTO> { knightRider, swordsman }, heroList);
         Assert.IsTrue(heroList?.Count == 1); //one hero went back
         Assert.IsTrue(heroList[0].Id == swordsman.Id); //high power hero is alive and go back
-        Assert.IsTrue(swordsman.Power == gameConfig.SwordsmanMaxPower); //and he hes same maximum power
+        Assert.IsTrue(swordsman.Power == gameConfig.SwordsmanMaxPower); //and it keeps the same maximum power
         Assert.IsTrue(knightRider.Power == 10 && knightRider.IsAlive == false); //low power hero died
     }
 }

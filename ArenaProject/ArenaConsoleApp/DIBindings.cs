@@ -8,7 +8,7 @@ namespace ArenaConsoleApp;
 
 public static class DIBindings
 {
-    public static void BindAllDepencies(IDIManager di)
+    public static void BindAllDependencies(IDIManager di)
     {
         di.Init
         (

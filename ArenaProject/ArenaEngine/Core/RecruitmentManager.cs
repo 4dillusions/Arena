@@ -6,7 +6,7 @@ public static class RecruitmentManager<TTypes> where TTypes : Enum
     /// Generate random enum items
     /// </summary>
     /// <param name="listSize"> size of random enum item list </param>
-    /// <returns> returns random generated enum list </returns>
+    /// <returns> A randomly generated list of enum values. </returns>
     public static List<TTypes> CreateRandomTypeList(uint listSize)
     {
         return CreateRandomTypeList(listSize, new SystemRandomProvider());
