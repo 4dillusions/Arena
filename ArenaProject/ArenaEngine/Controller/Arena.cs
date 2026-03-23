@@ -57,8 +57,11 @@ public class Arena
         int roundCounter = 1;
         while (heroList.Count > 1)
         {
-            if (!RunRound(roundCounter++))
+            var roundResult = RunRound(roundCounter++);
+            if (roundResult == null)
                 break;
+
+            LogRound(roundResult);
         }
 
         WriteLog("\nGame over!");
@@ -66,14 +69,13 @@ public class Arena
         if (heroList.Count == 1)
         {
             var winner = heroList.First();
-            winner.Description = "Laurel wreath";
-            WriteLog("Winner: " + FormatHero(winner), ConsoleColor.Cyan);
+            WriteLog("Winner: " + FormatHero(winner, "Laurel wreath"), ConsoleColor.Cyan);
         }
         else
             WriteLog("Nobody survived the game!");
     }
 
-    private bool RunRound(int roundCounter)
+    private ArenaRoundResult? RunRound(int roundCounter)
     {
         WriteLog("\n" + roundCounter + ". turns");
         WriteLog("Number of heroes in arena: " + heroList.Count);
@@ -82,24 +84,45 @@ public class Arena
         if (battleHeroes.Count != 2)
         {
             WriteLog("Unable to select two heroes for battle!", ConsoleColor.Red);
-            return false;
+            return null;
         }
-
-        battleHeroes[0].Description = "attacker";
-        battleHeroes[1].Description = "defender";
-        WriteHeroesStatsLog("Selected heroes for battle:", battleHeroes);
 
         battleSystem.RestHeroes(heroList);
         battleSystem.PlayBattle(battleHeroes[0], battleHeroes[1]);
-        WriteHeroesStatsLog("Heroes state after the battle:", battleHeroes);
         battleSystem.GoBackHeroesAfterBattle(battleHeroes, heroList);
 
-        return true;
+        return new ArenaRoundResult
+        {
+            RoundNumber = roundCounter,
+            Attacker = battleHeroes[0],
+            Defender = battleHeroes[1]
+        };
     }
 
-    private static string FormatHero(HeroDTO hero)
+    private void LogRound(ArenaRoundResult roundResult)
     {
-        return $"{hero.Id}. {hero.HeroType} hero, power: {hero.Power} [{(hero.IsAlive ? "live" : "died")}] - {hero.Description}";
+        WriteHeroesStatsLog
+        (
+            "Selected heroes for battle:",
+            [
+                (roundResult.Attacker, "attacker"),
+                (roundResult.Defender, "defender")
+            ]
+        );
+
+        WriteHeroesStatsLog
+        (
+            "Heroes state after the battle:",
+            [
+                (roundResult.Attacker, "attacker"),
+                (roundResult.Defender, "defender")
+            ]
+        );
+    }
+
+    private static string FormatHero(HeroDTO hero, string role)
+    {
+        return $"{hero.Id}. {hero.HeroType} hero, power: {hero.Power} [{(hero.IsAlive ? "live" : "died")}] - {role}";
     }
 
     private void WriteLog(string message, ConsoleColor color = ConsoleColor.Yellow)
@@ -107,11 +130,11 @@ public class Arena
         OnLogMessage?.Invoke(this, Tuple.Create(message, color));
     }
 
-    private void WriteHeroesStatsLog(string title, List<HeroDTO> heroes)
+    private void WriteHeroesStatsLog(string title, IEnumerable<(HeroDTO Hero, string Role)> heroes)
     {
         WriteLog(title);
 
-        foreach (var hero in heroes)
-            WriteLog(FormatHero(hero), hero.IsAlive ? ConsoleColor.Green : ConsoleColor.Red);
+        foreach (var (hero, role) in heroes)
+            WriteLog(FormatHero(hero, role), hero.IsAlive ? ConsoleColor.Green : ConsoleColor.Red);
     }
 }

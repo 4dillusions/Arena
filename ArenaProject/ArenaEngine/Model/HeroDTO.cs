@@ -14,5 +14,4 @@ public class HeroDTO
     public int Power { get; set; }
     public HeroTypes HeroType { get; set; }
     public bool IsAlive { get; set; } = true;
-    public string Description { get; set; } = null!;
 }
