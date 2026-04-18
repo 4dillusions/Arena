@@ -18,8 +18,8 @@ jobs:
 
     env:
       DOTNET_VERSION: 10.0.x
-      SOLUTION_PATH: ArenaProject/ArenaProject.sln
-      TEST_PROJECT_PATH: ArenaProject/ArenaTest/ArenaTest.csproj
+      SOLUTION_PATH: Project/App4di.Dotnet.ArenaProject.CrossPlatform.sln
+      TEST_PROJECT_PATH: Project/ArenaTest/App4di.Dotnet.ArenaTest.csproj
 
     steps:
     - name: Checkout
