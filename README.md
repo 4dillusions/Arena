@@ -36,12 +36,14 @@ Architecture and flow
 
 Build
 ------
-Open ArenaProject.sln and build solution
+```bash
+dotnet build Project/ArenaProject.sln
+```
 
 Run (example)
 ------
 ```bash
-cd Arena\ArenaProject\ArenaConsoleApp\bin\Debug\net10.0
+cd Arena\Project\ArenaConsoleApp\bin\Debug\net10.0
 ArenaConsoleApp.exe 4
 ```
 
