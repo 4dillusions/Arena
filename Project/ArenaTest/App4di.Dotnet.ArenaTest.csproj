@@ -8,6 +8,7 @@
     <IsPackable>false</IsPackable>
 
     <LangVersion>14</LangVersion>
+    <RootNamespace>App4di.Dotnet.ArenaTest</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

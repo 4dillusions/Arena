@@ -1,10 +1,15 @@
-﻿using ArenaConsoleApp.View;
-using ArenaEngine.Controller;
-using ArenaEngine.Core;
-using ArenaEngine.Service;
+﻿/*
+4di .NET Arena application
+Copyright (c) by 4D Illusions. All rights reserved.
+Released under the terms of the GNU General Public License version 3 or later.
+*/
+using App4di.Dotnet.ArenaConsoleApp.View;
+using App4di.Dotnet.ArenaEngine.Controller;
+using App4di.Dotnet.ArenaEngine.Core;
+using App4di.Dotnet.ArenaEngine.Service;
 using FW4di.Dotnet.Core.DependencyInjection;
 
-namespace ArenaConsoleApp;
+namespace App4di.Dotnet.ArenaConsoleApp;
 
 public static class DIBindings
 {

@@ -1,7 +1,12 @@
-﻿using ArenaEngine.Model;
-using ArenaEngine.Service;
+﻿/*
+4di .NET Arena application
+Copyright (c) by 4D Illusions. All rights reserved.
+Released under the terms of the GNU General Public License version 3 or later.
+*/
+using App4di.Dotnet.ArenaEngine.Model;
+using App4di.Dotnet.ArenaEngine.Service;
 
-namespace ArenaEngine.Controller;
+namespace App4di.Dotnet.ArenaEngine.Controller;
 
 /// <summary>
 /// control the game

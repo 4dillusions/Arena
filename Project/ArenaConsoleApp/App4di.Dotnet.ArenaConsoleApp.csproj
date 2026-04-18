@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>14</LangVersion>
+    <RootNamespace>App4di.Dotnet.ArenaConsoleApp</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
