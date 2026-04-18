@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ArenaEngine\ArenaEngine.csproj" />
+    <ProjectReference Include="..\ArenaEngine\App4di.Dotnet.ArenaEngine.csproj" />
   </ItemGroup>
 
 </Project>

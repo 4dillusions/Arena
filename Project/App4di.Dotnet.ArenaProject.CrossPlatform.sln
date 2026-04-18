@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArenaEngine", "ArenaEngine\ArenaEngine.csproj", "{65316199-7F34-4F9A-B768-1889E1F26905}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App4di.Dotnet.ArenaEngine", "ArenaEngine\App4di.Dotnet.ArenaEngine.csproj", "{65316199-7F34-4F9A-B768-1889E1F26905}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArenaTest", "ArenaTest\ArenaTest.csproj", "{7F115F1E-9419-49A9-B949-2417233B30A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App4di.Dotnet.ArenaTest", "ArenaTest\App4di.Dotnet.ArenaTest.csproj", "{7F115F1E-9419-49A9-B949-2417233B30A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArenaConsoleApp", "ArenaConsoleApp\ArenaConsoleApp.csproj", "{2DD1D6B0-9856-4DE4-BC94-1B54657C2E56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App4di.Dotnet.ArenaConsoleApp", "ArenaConsoleApp\App4di.Dotnet.ArenaConsoleApp.csproj", "{2DD1D6B0-9856-4DE4-BC94-1B54657C2E56}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FirstParty", "FirstParty", "{9004C390-8557-4CCB-83EF-02D3C1232EFA}"
 EndProject
