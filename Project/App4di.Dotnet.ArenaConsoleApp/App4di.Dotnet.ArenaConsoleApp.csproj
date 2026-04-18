@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ArenaEngine\App4di.Dotnet.ArenaEngine.csproj" />
+    <ProjectReference Include="..\App4di.Dotnet.ArenaEngine\App4di.Dotnet.ArenaEngine.csproj" />
   </ItemGroup>
 
 </Project>

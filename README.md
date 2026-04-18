@@ -43,8 +43,8 @@ dotnet build Project/App4di.Dotnet.ArenaProject.CrossPlatform.slnx
 Run (example)
 ------
 ```bash
-cd Arena\Project\ArenaConsoleApp\bin\Debug\net10.0
-ArenaConsoleApp.exe 4
+cd Arena\Project\App4di.Dotnet.ArenaConsoleApp\bin\Debug\net10.0
+App4di.Dotnet.ArenaConsoleApp.exe 4
 ```
 
 Specification
