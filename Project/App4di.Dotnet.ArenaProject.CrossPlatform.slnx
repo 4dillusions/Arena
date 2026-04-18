@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/FirstParty/">
+    <Project Path="FirstParty/FW4di.Dotnet.Core/Project/FW4di.Dotnet.Core/FW4di.Dotnet.Core.csproj" />
+  </Folder>
+  <Project Path="ArenaConsoleApp/App4di.Dotnet.ArenaConsoleApp.csproj" />
+  <Project Path="ArenaEngine/App4di.Dotnet.ArenaEngine.csproj" />
+  <Project Path="ArenaTest/App4di.Dotnet.ArenaTest.csproj" />
+</Solution>

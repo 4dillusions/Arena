@@ -37,7 +37,7 @@ Architecture and flow
 Build
 ------
 ```bash
-dotnet build Project/App4di.Dotnet.ArenaProject.CrossPlatform.sln
+dotnet build Project/App4di.Dotnet.ArenaProject.CrossPlatform.slnx
 ```
 
 Run (example)

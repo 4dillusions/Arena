@@ -18,8 +18,7 @@ jobs:
 
     env:
       DOTNET_VERSION: 10.0.x
-      SOLUTION_PATH: Project/App4di.Dotnet.ArenaProject.CrossPlatform.sln
-      TEST_PROJECT_PATH: Project/ArenaTest/App4di.Dotnet.ArenaTest.csproj
+      SOLUTION_PATH: Project/App4di.Dotnet.ArenaProject.CrossPlatform.slnx
 
     steps:
     - name: Checkout
@@ -40,4 +39,4 @@ jobs:
       run: dotnet build ${{ env.SOLUTION_PATH }} --configuration ${{ matrix.configuration }} --no-restore
 
     - name: Test
-      run: dotnet test ${{ env.TEST_PROJECT_PATH }} --configuration ${{ matrix.configuration }} --no-build --verbosity normal
+      run: dotnet test ${{ env.SOLUTION_PATH }} --configuration ${{ matrix.configuration }} --no-build --verbosity normal
